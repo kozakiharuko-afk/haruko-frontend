@@ -115,3 +115,76 @@ body {
   padding: 3rem 2rem;
   font-size: 2rem;
 }
+
+/* ---------- Homepage ---------- */
+
+.home {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+/* Continue Reading */
+.continue-list {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+}
+
+.continue-card {
+  min-width: 200px;
+  padding: 1rem;
+  background: var(--bg-header);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.continue-card span {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Cards */
+.card-row {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+}
+
+.card {
+  min-width: 160px;
+  padding: 1rem;
+  background: var(--bg-header);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Lists */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list li {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.rank {
+  font-weight: bold;
+  color: var(--accent);
+}
