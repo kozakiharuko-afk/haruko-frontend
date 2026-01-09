@@ -659,3 +659,42 @@ section:nth-of-type(2) h2 {
   }
 }
 
+/* ======================================================
+   FOOTER
+   ====================================================== */
+
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 1rem;
+  margin-top: 4rem;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.footer-links a {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-note {
+  font-size: 0.75rem;
+  color: var(--muted);
+}

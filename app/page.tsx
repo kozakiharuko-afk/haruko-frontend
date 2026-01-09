@@ -226,6 +226,21 @@ export default function HomePage() {
     </li>
   </ol>
 </section>
+{/* 🧾 Footer */}
+<footer className="footer">
+  <div className="footer-inner">
+    <nav className="footer-links">
+      <a href="#">About</a>
+      <a href="#">DMCA</a>
+      <a href="#">Privacy Rights</a>
+      <a href="#">Disclaimer</a>
+    </nav>
+
+    <p className="footer-note">
+      © {new Date().getFullYear()} Haruko Project. All rights reserved.
+    </p>
+  </div>
+</footer>
     </main>
   );
 }
