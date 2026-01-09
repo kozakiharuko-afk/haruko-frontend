@@ -193,6 +193,33 @@ body {
   justify-content: center;
 }
 
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatar-with-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.role-badges {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.role-badge {
+  padding: 0.15rem 0.45rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: white;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
 /* ======================================================
    HOMEPAGE
    ====================================================== */

@@ -3,31 +3,36 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
+/* ---------------- Types ---------------- */
+
 type Notification = {
   id: number;
   text: string;
 };
+
+type DiscordRole = {
+  id: string;
+  name: "Moderator" | "VIP";
+  color: string;
+};
+
+type DiscordUser = {
+  id: string;
+  username: string;
+  avatar: string | null;
+  roles: DiscordRole[];
+};
+
+/* ---------------- Component ---------------- */
 
 export default function ThemeProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
-  const [showNotifications, setShowNotifications] = useState(false);
-
-  // 🔔 Notifications state (REAL behavior now)
-  const [notifications, setNotifications] = useState<Notification[]>([
-    { id: 1, text: "New chapter released: Midnight Bloom" },
-    { id: 2, text: "Someone replied to your comment" },
-  ]);
-
-  const notifRef = useRef<HTMLDivElement>(null);
-
-  const notificationCount = notifications.length;
-  const messageCount = 0;
-
   /* ---------------- Theme ---------------- */
+
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
     const saved = localStorage.getItem("theme") as "dark" | "light" | null;
@@ -44,24 +49,32 @@ export default function ThemeProvider({
     document.documentElement.classList.toggle("light", next === "light");
   };
 
-  /* ---------------- Click Outside ---------------- */
+  /* ---------------- Mock Discord User ---------------- */
+  // 🔒 Replace with real Discord OAuth data later
 
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        notifRef.current &&
-        !notifRef.current.contains(e.target as Node)
-      ) {
-        setShowNotifications(false);
-      }
-    }
+  const discordUser: DiscordUser = {
+    id: "123456789012345678",
+    username: "Haruko",
+    avatar: "a_5b7d8e9f0abcdef1234567890abcdef",
+    roles: [
+      { id: "mod", name: "Moderator", color: "#4ea8de" },
+      { id: "vip", name: "VIP", color: "#ff8a5b" },
+    ],
+  };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  const avatarUrl = discordUser.avatar
+    ? `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png`
+    : null;
 
-  /* ---------------- Notification Actions ---------------- */
+  /* ---------------- Notifications ---------------- */
+
+  const [notifications, setNotifications] = useState<Notification[]>([
+    { id: 1, text: "New chapter released: Midnight Bloom" },
+    { id: 2, text: "Someone replied to your comment" },
+  ]);
+
+  const notificationCount = notifications.length;
+  const messageCount = 0; // 💬 hidden when 0
 
   const markAsRead = (id: number) => {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
@@ -70,6 +83,33 @@ export default function ThemeProvider({
   const clearAll = () => {
     setNotifications([]);
   };
+
+  /* ---------------- Dropdown State ---------------- */
+
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showAvatarMenu, setShowAvatarMenu] = useState(false);
+
+  const notifRef = useRef<HTMLDivElement>(null);
+  const avatarRef = useRef<HTMLDivElement>(null);
+
+  /* ---------------- Click Outside ---------------- */
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (notifRef.current && !notifRef.current.contains(e.target as Node)) {
+        setShowNotifications(false);
+      }
+      if (avatarRef.current && !avatarRef.current.contains(e.target as Node)) {
+        setShowAvatarMenu(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  /* ---------------- Render ---------------- */
 
   return (
     <>
@@ -90,6 +130,7 @@ export default function ThemeProvider({
 
           {/* RIGHT */}
           <div className="header-right">
+            {/* Theme toggle */}
             <button className="icon-btn" onClick={toggleTheme}>
               {theme === "dark" ? "🌙" : "☀️"}
             </button>
@@ -114,7 +155,6 @@ export default function ThemeProvider({
                 <div className="dropdown">
                   <div className="dropdown-header">
                     <span>Notifications</span>
-
                     {notifications.length > 0 && (
                       <button
                         className="clear-btn"
@@ -145,7 +185,7 @@ export default function ThemeProvider({
               )}
             </div>
 
-            {/* 💬 Messages (future) */}
+            {/* 💬 Messages */}
             <button className="icon-btn badge">
               💬
               {messageCount > 0 && (
@@ -155,7 +195,47 @@ export default function ThemeProvider({
               )}
             </button>
 
-            <div className="avatar">👤</div>
+            {/* 👤 Avatar + Role Badges */}
+            <div className="dropdown-wrapper" ref={avatarRef}>
+              <div
+                className="avatar avatar-with-badges"
+                onClick={() =>
+                  setShowAvatarMenu((v) => !v)
+                }
+              >
+                {avatarUrl ? (
+                  <img
+                    src={avatarUrl}
+                    alt={discordUser.username}
+                    className="avatar-img"
+                  />
+                ) : (
+                  "👤"
+                )}
+
+                <div className="role-badges">
+                  {discordUser.roles.map((role) => (
+                    <span
+                      key={role.id}
+                      className="role-badge"
+                      style={{ backgroundColor: role.color }}
+                    >
+                      {role.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {showAvatarMenu && (
+                <div className="dropdown">
+                  <ul className="dropdown-list">
+                    <li>My Library</li>
+                    <li>Activity</li>
+                    <li>Settings</li>
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
