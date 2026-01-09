@@ -660,6 +660,194 @@ section:nth-of-type(2) h2 {
 }
 
 /* ======================================================
+   MANHWA PAGE (GLASS LAYOUT)
+   ====================================================== */
+
+.series-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Cover */
+.series-cover {
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    var(--accent-soft),
+    var(--accent)
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.series-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+/* Title */
+.series-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.series-title span {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* Tags */
+.series-tags {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.series-tags span {
+  font-size: 0.7rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text);
+}
+
+/* Divider */
+.series-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* Two-column layout */
+.series-content {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2rem;
+}
+
+/* LEFT */
+.series-left h2 {
+  margin-bottom: 0.5rem;
+}
+
+.chapter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.chapter-list {
+  list-style: none;
+  padding: 0;
+}
+
+.chapter-list li {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+
+/* Chapter title (left side) */
+.chapter-title {
+  font-size: 0.9rem;
+  flex: 1; /* pushes meta to the right */
+}
+
+/* Chapter meta (right side) */
+.chapter-meta {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.7rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.chapter-list li:hover {
+  background: var(--accent-soft);
+}
+
+/* RIGHT */
+.series-right {
+  padding: 1rem;
+  border-radius: 16px;
+}
+
+.subscribe-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.sub-count {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.subscribe-btn {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Subscribed state */
+.subscribe-btn.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.subscribe-btn:hover {
+  opacity: 0.9;
+}
+
+/* Summary */
+.series-summary h3 {
+  margin-bottom: 0.5rem;
+}
+
+.series-summary p {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* Glass utility */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .series-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ======================================================
    FOOTER
    ====================================================== */
 
