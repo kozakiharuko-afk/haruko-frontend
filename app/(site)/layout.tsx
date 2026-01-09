@@ -1,3 +1,5 @@
+import SiteHeader from "./SiteHeader";
+
 export default function SiteLayout({
   children,
 }: {
@@ -5,7 +7,7 @@ export default function SiteLayout({
 }) {
   return (
     <>
-      {/* PUT YOUR HEADER JSX HERE */}
+      <SiteHeader />
       {children}
     </>
   );
