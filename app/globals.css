@@ -1327,6 +1327,47 @@ section:nth-of-type(2) h2 {
   transform: scale(0.92);
 }
 
+.action-btn .count {
+  margin-left: 0.35rem;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+/* Subscribe button */
+.action-btn.subscribe {
+  min-width: 140px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+/* Subscribed state */
+.action-btn.subscribe.subscribed {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+/* Hover feedback (desktop) */
+@media (hover: hover) {
+  .action-btn.subscribe:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* Tap feedback (mobile) */
+.action-btn.subscribe:active {
+  transform: scale(0.97);
+}
+
+/* Mobile sizing */
+@media (max-width: 768px) {
+  .action-btn.subscribe {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
 /* ======================================================
    FOOTER
    ====================================================== */

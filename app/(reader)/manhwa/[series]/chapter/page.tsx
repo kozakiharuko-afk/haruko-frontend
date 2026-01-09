@@ -1,7 +1,11 @@
 "use client";
 
+console.log("Comments file loaded");
+
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Comments from "./comments";
+
 
 export default function ChapterReaderPage() {
   /* ---------------- State ---------------- */
@@ -9,11 +13,13 @@ export default function ChapterReaderPage() {
   const [autoScroll, setAutoScroll] = useState(false);
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
+  const [likeCount, setLikeCount] = useState(128);
+  const [dislikeCount, setDislikeCount] = useState(3);
+  const [subscribed, setSubscribed] = useState(false);
   const [scrollSpeed, setScrollSpeed] = useState(0.5);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [headerVisible, setHeaderVisible] = useState(true);
 
-  // TEMP chapter boundaries
   const isFirstChapter = false;
   const isLastChapter = false;
 
@@ -130,7 +136,6 @@ export default function ChapterReaderPage() {
           headerVisible ? "visible" : "hidden"
         }`}
       >
-        {/* LEFT */}
         <div className="reader-header-left">
           <Link
             href="/"
@@ -144,7 +149,6 @@ export default function ChapterReaderPage() {
             <Link
               href="/manhwa/midnight-bloom"
               className="reader-series-cover-link"
-              aria-label="Go to series page"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="reader-series-cover" />
@@ -160,12 +164,10 @@ export default function ChapterReaderPage() {
           </span>
         </div>
 
-        {/* RIGHT */}
         <div
           className="reader-header-right"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Auto-scroll */}
           <button
             className={`reader-toggle ${autoScroll ? "active" : ""}`}
             onClick={() => setAutoScroll((v) => !v)}
@@ -189,7 +191,6 @@ export default function ChapterReaderPage() {
             </div>
           )}
 
-          {/* ⬅ Prev */}
           {isFirstChapter ? (
             <span className="reader-nav-btn disabled">
               ← Prev
@@ -203,7 +204,6 @@ export default function ChapterReaderPage() {
             </Link>
           )}
 
-          {/* ➡ Next */}
           {isLastChapter ? (
             <span className="reader-nav-btn disabled">
               Next →
@@ -220,31 +220,21 @@ export default function ChapterReaderPage() {
           <button
             className="icon-btn"
             onClick={toggleTheme}
-            aria-label="Toggle theme"
           >
             {theme === "dark" ? "🌙" : "☀️"}
           </button>
         </div>
       </header>
 
-      {/* ================= FLOATING SCROLL CONTROLS ================= */}
+      {/* ================= FLOATING SCROLL ================= */}
       <div
         className="reader-scroll-controls"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          className="scroll-btn"
-          aria-label="Scroll to top"
-          onClick={scrollToTop}
-        >
+        <button className="scroll-btn" onClick={scrollToTop}>
           ↑
         </button>
-
-        <button
-          className="scroll-btn"
-          aria-label="Scroll to bottom"
-          onClick={scrollToBottom}
-        >
+        <button className="scroll-btn" onClick={scrollToBottom}>
           ↓
         </button>
       </div>
@@ -265,59 +255,54 @@ export default function ChapterReaderPage() {
           <button
             className={`action-btn ${liked ? "active" : ""}`}
             onClick={() => {
-              setLiked(!liked);
-              if (disliked) setDisliked(false);
+              if (liked) {
+                setLiked(false);
+                setLikeCount((c) => c - 1);
+              } else {
+                setLiked(true);
+                setLikeCount((c) => c + 1);
+                if (disliked) {
+                  setDisliked(false);
+                  setDislikeCount((c) => c - 1);
+                }
+              }
             }}
           >
-            👍 Like
+            👍 Like <span className="count">{likeCount}</span>
           </button>
 
           <button
             className={`action-btn ${disliked ? "active" : ""}`}
             onClick={() => {
-              setDisliked(!disliked);
-              if (liked) setLiked(false);
+              if (disliked) {
+                setDisliked(false);
+                setDislikeCount((c) => c - 1);
+              } else {
+                setDisliked(true);
+                setDislikeCount((c) => c + 1);
+                if (liked) {
+                  setLiked(false);
+                  setLikeCount((c) => c - 1);
+                }
+              }
             }}
           >
-            👎 Dislike
+            👎 Dislike <span className="count">{dislikeCount}</span>
           </button>
         </div>
 
-        <button className="action-btn subscribe">
-          Subscribe
+        <button
+          className={`action-btn subscribe ${
+            subscribed ? "subscribed" : ""
+          }`}
+          onClick={() => setSubscribed((v) => !v)}
+        >
+          {subscribed ? "✓ Subscribed" : "+ Subscribe"}
         </button>
       </section>
 
       {/* ================= COMMENTS ================= */}
-      <section
-        className="reader-comments"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h3>Comments (2)</h3>
-
-        <div className="comment-input-row">
-          <div className="comment-avatar" />
-          <input
-            type="text"
-            placeholder="Write a comment..."
-            className="comment-input"
-          />
-          <button className="comment-send">
-            Send
-          </button>
-        </div>
-
-        <ul className="comment-list">
-          <li>
-            <strong>UserA</strong>
-            <p>This chapter was beautiful 😭</p>
-          </li>
-          <li>
-            <strong>UserB</strong>
-            <p>I love the pacing so much</p>
-          </li>
-        </ul>
-      </section>
+      <Comments />
 
       {/* ================= FOOTER ================= */}
       <footer
