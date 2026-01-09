@@ -16,8 +16,35 @@ export default function ChapterReaderPage() {
   const [scrollSpeed, setScrollSpeed] = useState(0.5);
   const [headerVisible, setHeaderVisible] = useState(true);
 
+  /* 🌙 Theme */
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+
   const isFirstChapter = false;
   const isLastChapter = false;
+
+  /* ---------------- Theme ---------------- */
+
+  useEffect(() => {
+    const saved = localStorage.getItem("theme") as
+      | "dark"
+      | "light"
+      | null;
+
+    if (saved === "light") {
+      setTheme("light");
+      document.documentElement.classList.add("light");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    localStorage.setItem("theme", next);
+    document.documentElement.classList.toggle(
+      "light",
+      next === "light"
+    );
+  };
 
   /* ---------------- Auto-scroll refs ---------------- */
 
@@ -77,7 +104,9 @@ export default function ChapterReaderPage() {
     };
 
     window.addEventListener("wheel", onUserScroll, { passive: true });
-    window.addEventListener("touchmove", onUserScroll, { passive: true });
+    window.addEventListener("touchmove", onUserScroll, {
+      passive: true,
+    });
 
     return () => {
       window.removeEventListener("wheel", onUserScroll);
@@ -144,7 +173,9 @@ export default function ChapterReaderPage() {
           onClick={(e) => e.stopPropagation()}
         >
           <button
-            className={`reader-toggle ${autoScroll ? "active" : ""}`}
+            className={`reader-toggle ${
+              autoScroll ? "active" : ""
+            }`}
             onClick={() => setAutoScroll((v) => !v)}
           >
             Auto-scroll
@@ -191,6 +222,14 @@ export default function ChapterReaderPage() {
               Next →
             </Link>
           )}
+
+          {/* 🌙 THEME TOGGLE */}
+          <button
+            className="icon-btn"
+            onClick={toggleTheme}
+          >
+            {theme === "dark" ? "🌙" : "☀️"}
+          </button>
         </div>
       </header>
 
@@ -240,7 +279,9 @@ export default function ChapterReaderPage() {
           </button>
 
           <button
-            className={`action-btn ${disliked ? "active" : ""}`}
+            className={`action-btn ${
+              disliked ? "active" : ""
+            }`}
             onClick={() => {
               if (disliked) {
                 setDisliked(false);
@@ -255,7 +296,8 @@ export default function ChapterReaderPage() {
               }
             }}
           >
-            👎 Dislike <span className="count">{dislikeCount}</span>
+            👎 Dislike{" "}
+            <span className="count">{dislikeCount}</span>
           </button>
         </div>
 

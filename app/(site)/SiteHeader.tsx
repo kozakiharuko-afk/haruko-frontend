@@ -1,10 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SiteHeader() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+
+  /* ---------------- Theme ---------------- */
+
+  useEffect(() => {
+    const saved = localStorage.getItem("theme") as "dark" | "light" | null;
+    if (saved === "light") {
+      setTheme("light");
+      document.documentElement.classList.add("light");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    localStorage.setItem("theme", next);
+    document.documentElement.classList.toggle("light", next === "light");
+  };
 
   return (
     <>
@@ -25,31 +43,33 @@ export default function SiteHeader() {
 
           {/* RIGHT */}
           <div className="header-right">
-  <button
-    className="icon-btn hamburger"
-    onClick={() => setShowMobileMenu((v) => !v)}
-  >
-    ☰
-  </button>
+            <button
+              className="icon-btn hamburger"
+              onClick={() => setShowMobileMenu((v) => !v)}
+            >
+              ☰
+            </button>
 
-  {/* 🌙 Theme toggle (hook later) */}
-  <button className="icon-btn">🌙</button>
+            {/* 🌙 Theme toggle */}
+            <button className="icon-btn" onClick={toggleTheme}>
+              {theme === "dark" ? "🌙" : "☀️"}
+            </button>
 
-  {/* 💬 Messages */}
-  <button className="icon-btn badge">
-    💬
-    <span className="badge-count">1</span>
-  </button>
+            {/* 💬 Messages */}
+            <button className="icon-btn badge">
+              💬
+              <span className="badge-count">1</span>
+            </button>
 
-  {/* 🔔 Notifications */}
-  <button className="icon-btn badge">
-    🔔
-    <span className="badge-count">2</span>
-  </button>
+            {/* 🔔 Notifications */}
+            <button className="icon-btn badge">
+              🔔
+              <span className="badge-count">2</span>
+            </button>
 
-  {/* 👤 Avatar */}
-  <div className="avatar">👤</div>
-</div>
+            {/* 👤 Avatar */}
+            <div className="avatar">👤</div>
+          </div>
         </div>
       </header>
 
