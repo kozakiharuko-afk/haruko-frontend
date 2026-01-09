@@ -1,0 +1,104 @@
+"use client";
+
+import { useState } from "react";
+import type { Comment } from "./Comments";
+
+/* ---------------- Props ---------------- */
+
+type Props = {
+  comment: Comment;
+  depth?: number; // for replies indentation
+};
+
+/* ---------------- Component ---------------- */
+
+export default function CommentItem({ comment, depth = 0 }: Props) {
+  const currentUserId = "1"; // 🔒 replace with Discord user later
+  const isOwner = comment.user.id === currentUserId;
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedText, setEditedText] = useState(comment.content);
+  const [showReply, setShowReply] = useState(false);
+
+  return (
+    <li
+      className={`comment-item ${depth > 0 ? "reply" : ""}`}
+      style={{ marginLeft: depth * 24 }}
+    >
+      {/* Header */}
+      <div className="comment-header">
+        <strong>{comment.user.name}</strong>
+        <span className="comment-time">{comment.createdAt}</span>
+      </div>
+
+      {/* Content */}
+      {isEditing ? (
+        <textarea
+          className="comment-edit"
+          value={editedText}
+          onChange={(e) => setEditedText(e.target.value)}
+        />
+      ) : (
+        <p className="comment-content">{comment.content}</p>
+      )}
+
+      {/* Actions */}
+      <div className="comment-actions">
+        <button>👍 {comment.likes}</button>
+        <button>👎 {comment.dislikes}</button>
+
+        <button onClick={() => setShowReply((v) => !v)}>
+          Reply
+        </button>
+
+        {isOwner && !isEditing && (
+          <button onClick={() => setIsEditing(true)}>Edit</button>
+        )}
+
+        {isOwner && isEditing && (
+          <>
+            <button
+              onClick={() => {
+                // TEMP save (wire to state later)
+                setIsEditing(false);
+              }}
+            >
+              Save
+            </button>
+            <button onClick={() => setIsEditing(false)}>
+              Cancel
+            </button>
+          </>
+        )}
+
+        {isOwner && (
+          <button className="danger">Delete</button>
+        )}
+      </div>
+
+      {/* Reply input (UI only for now) */}
+      {showReply && (
+        <div className="comment-reply">
+          <input
+            type="text"
+            placeholder={`Reply to ${comment.user.name}...`}
+          />
+          <button>Send</button>
+        </div>
+      )}
+
+      {/* Replies */}
+      {comment.replies && comment.replies.length > 0 && (
+        <ul className="comment-replies">
+          {comment.replies.map((reply) => (
+            <CommentItem
+              key={reply.id}
+              comment={reply}
+              depth={depth + 1}
+            />
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+}

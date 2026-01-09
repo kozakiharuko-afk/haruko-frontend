@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 /* ---------------- Types ---------------- */
 
@@ -31,18 +30,17 @@ export default function ThemeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  /* ---------------- Route Detection ---------------- */
-
-  const pathname = usePathname();
-  const isReaderPage = pathname.startsWith("/manhwa/chapter");
-
   /* ---------------- Theme ---------------- */
 
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem("theme") as "dark" | "light" | null;
+    const saved = localStorage.getItem("theme") as
+      | "dark"
+      | "light"
+      | null;
+
     if (saved === "light") {
       setTheme("light");
       document.documentElement.classList.add("light");
@@ -57,7 +55,6 @@ export default function ThemeProvider({
   };
 
   /* ---------------- Mock Discord User ---------------- */
-  // 🔒 Roles kept for future User Page
 
   const discordUser: DiscordUser = {
     id: "123456789012345678",
@@ -120,150 +117,144 @@ export default function ThemeProvider({
 
   return (
     <>
-      {/* 🌐 GLOBAL HEADER (hidden on reader page) */}
-      {!isReaderPage && (
-        <>
-          <header className="header">
-            <div className="container header-inner">
-              {/* LEFT */}
-              <div className="header-left">
-                <Link href="/" className="logo">
-                  Haruko Project
-                </Link>
+      {/* 🌐 GLOBAL HEADER */}
+      <header className="header">
+        <div className="container header-inner">
+          {/* LEFT */}
+          <div className="header-left">
+            <Link href="/" className="logo">
+              Haruko Project
+            </Link>
 
-                <input
-                  className="search"
-                  type="text"
-                  placeholder="Search series..."
-                />
-              </div>
+            <input
+              className="search"
+              type="text"
+              placeholder="Search series..."
+            />
+          </div>
 
-              {/* RIGHT */}
-              <div className="header-right">
-                {/* ☰ Mobile menu */}
-                <button
-                  className="icon-btn hamburger"
-                  onClick={() => setShowMobileMenu((v) => !v)}
-                >
-                  ☰
-                </button>
+          {/* RIGHT */}
+          <div className="header-right">
+            {/* ☰ Mobile menu */}
+            <button
+              className="icon-btn hamburger"
+              onClick={() => setShowMobileMenu((v) => !v)}
+            >
+              ☰
+            </button>
 
-                {/* Theme toggle */}
-                <button className="icon-btn" onClick={toggleTheme}>
-                  {theme === "dark" ? "🌙" : "☀️"}
-                </button>
+            {/* Theme toggle */}
+            <button className="icon-btn" onClick={toggleTheme}>
+              {theme === "dark" ? "🌙" : "☀️"}
+            </button>
 
-                {/* 🔔 Notifications */}
-                <div className="dropdown-wrapper" ref={notifRef}>
-                  <button
-                    className="icon-btn badge"
-                    onClick={() =>
-                      setShowNotifications((v) => !v)
-                    }
-                  >
-                    🔔
-                    {notificationCount > 0 && (
-                      <span className="badge-count">
-                        {notificationCount}
-                      </span>
-                    )}
-                  </button>
+            {/* 🔔 Notifications */}
+            <div className="dropdown-wrapper" ref={notifRef}>
+              <button
+                className="icon-btn badge"
+                onClick={() => setShowNotifications((v) => !v)}
+              >
+                🔔
+                {notificationCount > 0 && (
+                  <span className="badge-count">
+                    {notificationCount}
+                  </span>
+                )}
+              </button>
 
-                  {showNotifications && (
-                    <div className="dropdown">
-                      <div className="dropdown-header">
-                        <span>Notifications</span>
-                        {notifications.length > 0 && (
-                          <button
-                            className="clear-btn"
-                            onClick={clearAll}
-                          >
-                            Clear all
-                          </button>
-                        )}
-                      </div>
-
-                      {notifications.length === 0 ? (
-                        <div className="dropdown-empty">
-                          You’re all caught up ✨
-                        </div>
-                      ) : (
-                        <ul className="dropdown-list">
-                          {notifications.map((n) => (
-                            <li
-                              key={n.id}
-                              onClick={() => markAsRead(n.id)}
-                            >
-                              {n.text}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  )}
-                </div>
-
-                {/* 💬 Messages */}
-                <button className="icon-btn badge">
-                  💬
-                  {messageCount > 0 && (
-                    <span className="badge-count">
-                      {messageCount}
-                    </span>
-                  )}
-                </button>
-
-                {/* 👤 Avatar */}
-                <div className="dropdown-wrapper" ref={avatarRef}>
-                  <div
-                    className="avatar"
-                    onClick={() =>
-                      setShowAvatarMenu((v) => !v)
-                    }
-                  >
-                    {avatarUrl ? (
-                      <img
-                        src={avatarUrl}
-                        alt={discordUser.username}
-                        className="avatar-img"
-                      />
-                    ) : (
-                      "👤"
+              {showNotifications && (
+                <div className="dropdown">
+                  <div className="dropdown-header">
+                    <span>Notifications</span>
+                    {notifications.length > 0 && (
+                      <button
+                        className="clear-btn"
+                        onClick={clearAll}
+                      >
+                        Clear all
+                      </button>
                     )}
                   </div>
 
-                  {showAvatarMenu && (
-                    <div className="dropdown">
-                      <ul className="dropdown-list">
-                        <li>My Library</li>
-                        <li>Activity</li>
-                        <li>Settings</li>
-                      </ul>
+                  {notifications.length === 0 ? (
+                    <div className="dropdown-empty">
+                      You’re all caught up ✨
                     </div>
+                  ) : (
+                    <ul className="dropdown-list">
+                      {notifications.map((n) => (
+                        <li
+                          key={n.id}
+                          onClick={() => markAsRead(n.id)}
+                        >
+                          {n.text}
+                        </li>
+                      ))}
+                    </ul>
                   )}
                 </div>
-              </div>
+              )}
             </div>
-          </header>
 
-          {/* 📱 Mobile menu */}
-          {showMobileMenu && (
-            <div className="mobile-menu">
-              <input
-                className="search mobile-search"
-                type="text"
-                placeholder="Search series..."
-              />
+            {/* 💬 Messages */}
+            <button className="icon-btn badge">
+              💬
+              {messageCount > 0 && (
+                <span className="badge-count">
+                  {messageCount}
+                </span>
+              )}
+            </button>
 
-              <div className="mobile-actions">
-                <button className="icon-btn">🔔 Notifications</button>
-                <button className="icon-btn">💬 Messages</button>
-                <button className="icon-btn">📚 My Library</button>
-                <button className="icon-btn">⚙️ Settings</button>
+            {/* 👤 Avatar */}
+            <div className="dropdown-wrapper" ref={avatarRef}>
+              <div
+                className="avatar"
+                onClick={() =>
+                  setShowAvatarMenu((v) => !v)
+                }
+              >
+                {avatarUrl ? (
+                  <img
+                    src={avatarUrl}
+                    alt={discordUser.username}
+                    className="avatar-img"
+                  />
+                ) : (
+                  "👤"
+                )}
               </div>
+
+              {showAvatarMenu && (
+                <div className="dropdown">
+                  <ul className="dropdown-list">
+                    <li>My Library</li>
+                    <li>Activity</li>
+                    <li>Settings</li>
+                  </ul>
+                </div>
+              )}
             </div>
-          )}
-        </>
+          </div>
+        </div>
+      </header>
+
+      {/* 📱 Mobile menu */}
+      {showMobileMenu && (
+        <div className="mobile-menu">
+          <input
+            className="search mobile-search"
+            type="text"
+            placeholder="Search series..."
+          />
+
+          <div className="mobile-actions">
+            <button className="icon-btn">🔔 Notifications</button>
+            <button className="icon-btn">💬 Messages</button>
+            <button className="icon-btn">📚 My Library</button>
+            <button className="icon-btn">⚙️ Settings</button>
+          </div>
+        </div>
       )}
 
       {/* 🧠 Page content */}

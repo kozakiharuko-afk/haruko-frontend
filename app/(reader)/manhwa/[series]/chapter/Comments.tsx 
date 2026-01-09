@@ -1,0 +1,70 @@
+"use client";
+
+import { useState } from "react";
+import CommentItem from "./CommentItem";
+import CommentForm from "./CommentForm";
+
+/* ---------------- Types ---------------- */
+
+export type Comment = {
+  id: number;
+  user: {
+    id: string;
+    name: string;
+  };
+  content: string;
+  likes: number;
+  dislikes: number;
+  createdAt: string;
+  replies?: Comment[];
+};
+
+/* ---------------- Component ---------------- */
+
+export default function Comments() {
+  // TEMP mock comments (replace with backend later)
+  const [comments, setComments] = useState<Comment[]>([
+    {
+      id: 1,
+      user: { id: "1", name: "UserA" },
+      content: "This chapter was beautiful 😭",
+      likes: 3,
+      dislikes: 0,
+      createdAt: "2 hours ago",
+      replies: [
+        {
+          id: 2,
+          user: { id: "2", name: "UserB" },
+          content: "I agree so much!",
+          likes: 1,
+          dislikes: 0,
+          createdAt: "1 hour ago",
+        },
+      ],
+    },
+    {
+      id: 3,
+      user: { id: "3", name: "UserC" },
+      content: "The pacing is perfect",
+      likes: 2,
+      dislikes: 0,
+      createdAt: "30 minutes ago",
+    },
+  ]);
+
+  return (
+    <section className="reader-comments">
+      <h3>Comments ({comments.length})</h3>
+
+      {/* New comment input */}
+      <CommentForm />
+
+      {/* Comment list */}
+      <ul className="comment-list">
+        {comments.map((comment) => (
+          <CommentItem key={comment.id} comment={comment} />
+        ))}
+      </ul>
+    </section>
+  );
+}

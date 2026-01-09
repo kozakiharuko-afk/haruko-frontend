@@ -104,6 +104,19 @@ export default function ChapterReaderPage() {
     };
   }, [autoScroll]);
 
+  /* ---------------- Scroll helpers ---------------- */
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    });
+  };
+
   /* ---------------- Render ---------------- */
 
   return (
@@ -213,6 +226,28 @@ export default function ChapterReaderPage() {
           </button>
         </div>
       </header>
+
+      {/* ================= FLOATING SCROLL CONTROLS ================= */}
+      <div
+        className="reader-scroll-controls"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          className="scroll-btn"
+          aria-label="Scroll to top"
+          onClick={scrollToTop}
+        >
+          ↑
+        </button>
+
+        <button
+          className="scroll-btn"
+          aria-label="Scroll to bottom"
+          onClick={scrollToBottom}
+        >
+          ↓
+        </button>
+      </div>
 
       {/* ================= CONTENT ================= */}
       <section className="reader-content">
