@@ -1,86 +1,100 @@
-type ContinueItem = {
-  title: string;
-  chapter: string;
-};
-
-type SeriesItem = {
-  title: string;
-};
-
-const continueReading: ContinueItem[] = [
-  { title: "Midnight Bloom", chapter: "Chapter 12" },
-  { title: "Ashes of Spring", chapter: "Chapter 4" },
-];
-
-const latestUpdates: SeriesItem[] = [
-  { title: "Crimson Veil" },
-  { title: "Moonbound" },
-  { title: "Silent Petals" },
-];
-
-const mostPopular: SeriesItem[] = [
-  { title: "Falling Star" },
-  { title: "Obsidian Heart" },
-  { title: "White Nocturne" },
-];
-
-const newlyReleased: SeriesItem[] = [
-  { title: "Peach Moon" },
-  { title: "Velvet Dusk" },
-];
-
-export default function Home() {
+export default function HomePage() {
   return (
     <main className="home">
-      {/* Continue Reading */}
+      {/* ⭐ Continue Reading */}
       <section>
         <h2>Continue Reading</h2>
-        <div className="continue-list">
-          {continueReading.map((item) => (
-            <div key={item.title} className="continue-card">
-              <strong>{item.title}</strong>
-              <span>{item.chapter}</span>
+
+        <div className="continue-row">
+          {/* Card */}
+          <div className="continue-card">
+            <div className="continue-cover">
+              <span>Manhwa</span>
             </div>
-          ))}
+
+            <div className="continue-info">
+              <h3>Midnight Bloom</h3>
+              <p>Chapter 24</p>
+
+              <div className="progress">
+                <div className="progress-bar" style={{ width: "65%" }} />
+              </div>
+            </div>
+          </div>
+
+          {/* Card */}
+          <div className="continue-card">
+            <div className="continue-cover novel">
+              <span>Novel</span>
+            </div>
+
+            <div className="continue-info">
+              <h3>Crimson Ashes</h3>
+              <p>Chapter 12</p>
+
+              <div className="progress">
+                <div className="progress-bar" style={{ width: "40%" }} />
+              </div>
+            </div>
+          </div>
+
+          {/* Card */}
+          <div className="continue-card">
+            <div className="continue-cover">
+              <span>Manhwa</span>
+            </div>
+
+            <div className="continue-info">
+              <h3>Echoes of You</h3>
+              <p>Chapter 8</p>
+
+              <div className="progress">
+                <div className="progress-bar" style={{ width: "80%" }} />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+      {/* 🆕 Latest Updates */}
+<section>
+  <h2>Latest Updates</h2>
 
-      {/* Latest Updates */}
-      <section>
-        <h2>Latest Updates</h2>
-        <div className="card-row">
-          {latestUpdates.map((item) => (
-            <div key={item.title} className="card">
-              {item.title}
-            </div>
-          ))}
-        </div>
-      </section>
+  <div className="latest-slider">
+    <div className="latest-track">
+      {/* Item */}
+      <div className="latest-card">
+        <div className="latest-cover" />
+        <h3>Midnight Bloom</h3>
+        <p>Chapter 25</p>
+      </div>
 
-      {/* Most Popular */}
-      <section>
-        <h2>Most Popular</h2>
-        <ul className="list">
-          {mostPopular.map((item, index) => (
-            <li key={item.title}>
-              <span className="rank">{index + 1}</span>
-              {item.title}
-            </li>
-          ))}
-        </ul>
-      </section>
+      <div className="latest-card">
+        <div className="latest-cover" />
+        <h3>Crimson Ashes</h3>
+        <p>Chapter 13</p>
+      </div>
 
-      {/* Newly Released */}
-      <section>
-        <h2>Newly Released</h2>
-        <div className="card-row">
-          {newlyReleased.map((item) => (
-            <div key={item.title} className="card">
-              {item.title}
-            </div>
-          ))}
-        </div>
-      </section>
+      <div className="latest-card">
+        <div className="latest-cover" />
+        <h3>Echoes of You</h3>
+        <p>Chapter 9</p>
+      </div>
+
+      <div className="latest-card">
+        <div className="latest-cover" />
+        <h3>Fallen Petals</h3>
+        <p>Chapter 31</p>
+      </div>
+
+      <div className="latest-card">
+        <div className="latest-cover" />
+        <h3>Starlit Cage</h3>
+        <p>Chapter 18</p>
+      </div>
+    </div>
+  </div>
+</section>
     </main>
   );
 }
+

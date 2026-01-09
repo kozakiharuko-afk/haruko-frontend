@@ -33,6 +33,7 @@ export default function ThemeProvider({
   /* ---------------- Theme ---------------- */
 
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("theme") as "dark" | "light" | null;
@@ -50,7 +51,7 @@ export default function ThemeProvider({
   };
 
   /* ---------------- Mock Discord User ---------------- */
-  // 🔒 Replace with real Discord OAuth data later
+  // 🔒 Roles kept for future User Page
 
   const discordUser: DiscordUser = {
     id: "123456789012345678",
@@ -130,6 +131,14 @@ export default function ThemeProvider({
 
           {/* RIGHT */}
           <div className="header-right">
+            {/* ☰ Mobile menu */}
+            <button
+              className="icon-btn hamburger"
+              onClick={() => setShowMobileMenu((v) => !v)}
+            >
+              ☰
+            </button>
+
             {/* Theme toggle */}
             <button className="icon-btn" onClick={toggleTheme}>
               {theme === "dark" ? "🌙" : "☀️"}
@@ -195,10 +204,10 @@ export default function ThemeProvider({
               )}
             </button>
 
-            {/* 👤 Avatar + Role Badges */}
+            {/* 👤 Avatar ONLY (no role badges here) */}
             <div className="dropdown-wrapper" ref={avatarRef}>
               <div
-                className="avatar avatar-with-badges"
+                className="avatar"
                 onClick={() =>
                   setShowAvatarMenu((v) => !v)
                 }
@@ -212,18 +221,6 @@ export default function ThemeProvider({
                 ) : (
                   "👤"
                 )}
-
-                <div className="role-badges">
-                  {discordUser.roles.map((role) => (
-                    <span
-                      key={role.id}
-                      className="role-badge"
-                      style={{ backgroundColor: role.color }}
-                    >
-                      {role.name}
-                    </span>
-                  ))}
-                </div>
               </div>
 
               {showAvatarMenu && (
@@ -239,6 +236,24 @@ export default function ThemeProvider({
           </div>
         </div>
       </header>
+
+      {/* 📱 Mobile menu */}
+      {showMobileMenu && (
+        <div className="mobile-menu">
+          <input
+            className="search mobile-search"
+            type="text"
+            placeholder="Search series..."
+          />
+
+          <div className="mobile-actions">
+            <button className="icon-btn">🔔 Notifications</button>
+            <button className="icon-btn">💬 Messages</button>
+            <button className="icon-btn">📚 My Library</button>
+            <button className="icon-btn">⚙️ Settings</button>
+          </div>
+        </div>
+      )}
 
       {children}
     </>
