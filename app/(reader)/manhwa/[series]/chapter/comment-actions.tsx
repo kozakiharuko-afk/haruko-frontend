@@ -1,42 +1,31 @@
 "use client";
 
-import { useState } from "react";
 import { Comment } from "./comments";
+
+type Props = {
+  comment: Comment;
+  onEdit: () => void;
+  onDelete: () => void;
+  onLike: () => void;
+  onDislike: () => void;
+};
 
 export default function CommentActions({
   comment,
-  editing,
-  onEditToggle,
-  onSave,
-}: {
-  comment: Comment;
-  editing: boolean;
-  onEditToggle: () => void;
-  onSave: () => void;
-}) {
-  const [likes, setLikes] = useState(comment.likes);
-  const [dislikes, setDislikes] = useState(comment.dislikes);
-
+  onEdit,
+  onDelete,
+  onLike,
+  onDislike,
+}: Props) {
   return (
     <div className="comment-actions">
-      <button onClick={() => setLikes((l) => l + 1)}>
-        👍 {likes}
-      </button>
-
-      <button onClick={() => setDislikes((d) => d + 1)}>
-        👎 {dislikes}
-      </button>
-
-      <button>💬 Reply</button>
+      <button onClick={onLike}>👍 {comment.likes}</button>
+      <button onClick={onDislike}>👎 {comment.dislikes}</button>
 
       {comment.isMine && (
         <>
-          {editing ? (
-            <button onClick={onSave}>💾 Save</button>
-          ) : (
-            <button onClick={onEditToggle}>✏️ Edit</button>
-          )}
-          <button className="danger">🗑 Delete</button>
+          <button onClick={onEdit}>✏️ Edit</button>
+          <button onClick={onDelete}>🗑 Delete</button>
         </>
       )}
     </div>
