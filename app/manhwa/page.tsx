@@ -43,13 +43,18 @@ export default function ManhwaPage() {
 
           <ol className="chapter-list">
             <li>
-              <span className="chapter-title">Chapter 25</span>
-              <div className="chapter-meta">
-                <span>2 days ago</span>
-                <span>👁 12.4k</span>
-                <span>💬 38</span>
-              </div>
-            </li>
+  <span className="chapter-title">
+  Chapter 25
+  <span className="chapter-new">NEW</span>
+  <span className="chapter-lang en">EN</span>
+</span>
+
+  <div className="chapter-meta">
+    <span>2 days ago</span>
+    <span>👁 12.4k</span>
+    <span>💬 38</span>
+  </div>
+</li>
 
             <li>
               <span className="chapter-title">Chapter 24</span>
@@ -61,7 +66,10 @@ export default function ManhwaPage() {
             </li>
 
             <li>
-              <span className="chapter-title">Chapter 23</span>
+              <span className="chapter-title">
+  Chapter 24
+  <span className="chapter-lang raw">RAW</span>
+</span>
               <div className="chapter-meta">
                 <span>1 week ago</span>
                 <span>👁 10.9k</span>
@@ -110,7 +118,23 @@ export default function ManhwaPage() {
             </p>
           </div>
         </aside>
-      </section>
+            </section>
+
+      {/* 🧾 Footer */}
+      <footer className="footer">
+        <div className="footer-inner">
+          <nav className="footer-links">
+            <a href="#">About</a>
+            <a href="#">DMCA</a>
+            <a href="#">Privacy Rights</a>
+            <a href="#">Disclaimer</a>
+          </nav>
+
+          <p className="footer-note">
+            © {new Date().getFullYear()} Haruko Project. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </main>
   );
 }

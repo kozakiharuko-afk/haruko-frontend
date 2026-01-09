@@ -762,10 +762,40 @@ section:nth-of-type(2) h2 {
   cursor: pointer;
 }
 
+/* Hover affordance */
+.chapter-list li {
+  position: relative;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.chapter-list li::after {
+  content: "→";
+  position: absolute;
+  right: 0;
+  opacity: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Hover state */
+.chapter-list li:hover {
+  background: var(--accent-soft);
+  transform: translateX(4px);
+}
+
+.chapter-list li:hover::after {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
 /* Chapter title (left side) */
 .chapter-title {
   font-size: 0.9rem;
-  flex: 1; /* pushes meta to the right */
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 /* Chapter meta (right side) */
@@ -781,10 +811,53 @@ section:nth-of-type(2) h2 {
   background: var(--accent-soft);
 }
 
+/* Left group (title + NEW badge) */
+.chapter-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+/* NEW badge */
+.chapter-new {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: white;
+}
+
+/* Language badge */
+.chapter-lang {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+
+/* English */
+.chapter-lang.en {
+  color: var(--accent);
+  background: rgba(124, 92, 255, 0.15);
+  border-color: rgba(124, 92, 255, 0.35);
+}
+
+/* Raw */
+.chapter-lang.raw {
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.08);
+}
+
 /* RIGHT */
 .series-right {
   padding: 1rem;
   border-radius: 16px;
+
+  position: sticky;
+  top: 100px; /* below glass header */
 }
 
 .subscribe-box {
@@ -844,6 +917,18 @@ section:nth-of-type(2) h2 {
 @media (max-width: 900px) {
   .series-content {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .series-right {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .chapter-list li::after {
+    display: none;
   }
 }
 
