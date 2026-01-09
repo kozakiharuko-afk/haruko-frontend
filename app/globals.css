@@ -1413,6 +1413,64 @@ section:nth-of-type(2) h2 {
   }
 }
 
+/* 📘 Novel Reader */
+.novel-reader {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.novel-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.novel-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.novel-chapter {
+  font-size: 1.1rem;
+  opacity: 0.7;
+  margin-top: 0.25rem;
+}
+
+.novel-content p {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  margin-bottom: 1.6rem;
+}
+
+.novel-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4rem;
+}
+
+.novel-nav-btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  transition: background 0.2s ease;
+}
+
+.novel-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.reader-page.novel .reader-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.reader-page.novel .reader-content p {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  margin-bottom: 1.6rem;
+}
+
 /* ======================================================
    FOOTER
    ====================================================== */
