@@ -1,11 +1,6 @@
 import "./globals.css";
 import ThemeProvider from "./ThemeProvider";
 
-export const metadata = {
-  title: "Haruko Project",
-  description: "Manhwa & Novel Platform",
-};
-
 export default function RootLayout({
   children,
 }: {
@@ -14,7 +9,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

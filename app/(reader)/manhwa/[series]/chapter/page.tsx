@@ -1,11 +1,8 @@
 "use client";
 
-console.log("Comments file loaded");
-
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Comments from "./comments";
-
 
 export default function ChapterReaderPage() {
   /* ---------------- State ---------------- */
@@ -17,32 +14,10 @@ export default function ChapterReaderPage() {
   const [dislikeCount, setDislikeCount] = useState(3);
   const [subscribed, setSubscribed] = useState(false);
   const [scrollSpeed, setScrollSpeed] = useState(0.5);
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [headerVisible, setHeaderVisible] = useState(true);
 
   const isFirstChapter = false;
   const isLastChapter = false;
-
-  /* ---------------- Theme ---------------- */
-
-  useEffect(() => {
-    const saved = localStorage.getItem("theme") as
-      | "dark"
-      | "light"
-      | null;
-
-    if (saved === "light") {
-      setTheme("light");
-      document.documentElement.classList.add("light");
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    localStorage.setItem("theme", next);
-    document.documentElement.classList.toggle("light", next === "light");
-  };
 
   /* ---------------- Auto-scroll refs ---------------- */
 
@@ -216,13 +191,6 @@ export default function ChapterReaderPage() {
               Next →
             </Link>
           )}
-
-          <button
-            className="icon-btn"
-            onClick={toggleTheme}
-          >
-            {theme === "dark" ? "🌙" : "☀️"}
-          </button>
         </div>
       </header>
 
