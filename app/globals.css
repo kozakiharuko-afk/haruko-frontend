@@ -933,6 +933,179 @@ section:nth-of-type(2) h2 {
 }
 
 /* ======================================================
+   CHAPTER READER
+   ====================================================== */
+
+.reader-page {
+  padding-top: 5rem;
+}
+
+/* Header */
+.reader-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.reader-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.reader-logo {
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.reader-series {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.reader-series-cover {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--accent-soft);
+}
+
+.reader-series-title {
+  font-weight: 600;
+}
+
+.reader-chapter-title {
+  color: var(--muted);
+}
+
+/* Header right */
+.reader-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reader-toggle {
+  border: 1px solid var(--border);
+  background: transparent;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.reader-toggle.active {
+  background: var(--accent);
+  color: white;
+}
+
+.reader-nav-btn {
+  border: 1px solid var(--border);
+  background: transparent;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+/* Panels */
+.reader-content {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.reader-panel {
+  height: 900px;
+  background: #dbe8f6;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+}
+
+/* Engagement */
+.reader-engagement {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 760px;
+  margin: 2rem auto;
+  padding: 0 0.5rem;
+}
+
+.reader-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.action-btn {
+  border: 1px solid var(--border);
+  background: transparent;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.action-btn.active {
+  background: var(--accent);
+  color: white;
+}
+
+.action-btn.subscribe {
+  background: var(--accent-soft);
+}
+
+/* Comments */
+.reader-comments {
+  max-width: 760px;
+  margin: 0 auto 3rem;
+  padding: 0 0.5rem;
+}
+
+.comment-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.comment-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+}
+
+.comment-input {
+  flex: 1;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+}
+
+.comment-send {
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+/* ======================================================
    FOOTER
    ====================================================== */
 
