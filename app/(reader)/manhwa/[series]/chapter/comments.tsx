@@ -3,6 +3,8 @@
 import { useState } from "react";
 import CommentItem from "./comment-item";
 
+/* ---------------- Types ---------------- */
+
 export type Comment = {
   id: number;
   author: string;
@@ -12,6 +14,8 @@ export type Comment = {
   replies?: Comment[];
   isMine?: boolean;
 };
+
+/* ---------------- Component ---------------- */
 
 export default function Comments() {
   const [comments, setComments] = useState<Comment[]>([
@@ -50,12 +54,28 @@ export default function Comments() {
 
   return (
     <section className="reader-comments">
-      <h3>Comments ({comments.length})</h3>
+      {/* ================= HEADER ================= */}
+      <div className="comments-header">
+        <h2 className="comments-title">COMMENTS</h2>
+        <span className="comments-count">
+          {comments.length}
+        </span>
+      </div>
 
-      {/* INPUT */}
+      {/* ================= INPUT ================= */}
       <CommentInput onSubmit={addComment} />
 
-      {/* LIST */}
+      {/* ================= SORT (future-ready) ================= */}
+      <div className="comments-sort">
+        <button className="sort-btn active">
+          Newest
+        </button>
+        <button className="sort-btn">
+          Popular
+        </button>
+      </div>
+
+      {/* ================= LIST ================= */}
       <ul className="comment-list">
         {comments.map((comment) => (
           <CommentItem
@@ -68,7 +88,7 @@ export default function Comments() {
   );
 }
 
-/* ---------------- Input ---------------- */
+/* ---------------- Comment Input ---------------- */
 
 function CommentInput({
   onSubmit,
@@ -80,12 +100,14 @@ function CommentInput({
   return (
     <div className="comment-input-row">
       <div className="comment-avatar" />
+
       <input
         className="comment-input"
         placeholder="Write a comment..."
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
+
       <button
         className="comment-send"
         onClick={() => {
