@@ -387,6 +387,69 @@ section:nth-of-type(2) h2 {
 }
 
 /* ======================================================
+   NEWLY RELEASED – TOP 10 LIST
+   ====================================================== */
+
+.new-release-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem 2rem;
+  padding: 0;
+  margin: 0;
+}
+
+.new-release-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.new-release-list li:hover {
+  color: var(--accent);
+}
+
+/* Rank number */
+.new-release-list .rank {
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--muted);
+  width: 1.6rem;
+  flex-shrink: 0;
+}
+
+/* Icon placeholder */
+.release-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: linear-gradient(
+    135deg,
+    var(--accent-soft),
+    var(--accent)
+  );
+  flex-shrink: 0;
+}
+
+/* Title */
+.release-title {
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Mobile: single column */
+@media (max-width: 768px) {
+  .new-release-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ======================================================
    DROPDOWNS
    ====================================================== */
 
@@ -524,7 +587,7 @@ section:nth-of-type(2) h2 {
 
 /* Base card */
 .latest-card {
-  width: 220px; /* BIGGER */
+  width: 260px; /* BIGGER */
   text-align: center;
   cursor: pointer;
   transition: transform 0.3s ease, filter 0.3s ease;
@@ -533,14 +596,14 @@ section:nth-of-type(2) h2 {
 
 /* Cover */
 .latest-cover {
-  aspect-ratio: 16 / 10; /* slightly taller = more presence */
-  border-radius: 18px;
+  aspect-ratio: 3 / 2; /* TALLER = HERO */
+  border-radius: 20px;
   background: linear-gradient(
     135deg,
     var(--accent-soft),
     var(--accent)
   );
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
 }
 
 /* Text */
@@ -588,7 +651,7 @@ section:nth-of-type(2) h2 {
   }
 
   .latest-card {
-    width: 180px;
+    width: 200px;
   }
 
   .latest-card:active {

@@ -94,6 +94,138 @@ export default function HomePage() {
     </div>
   </div>
 </section>
+{/* ✨ Newly Released */}
+<section>
+  <h2>Newly Released</h2>
+
+  <ol className="new-release-list">
+    <li>
+      <span className="rank">1.</span>
+      <div className="release-icon" />
+      <span className="release-title">Midnight Bloom</span>
+    </li>
+
+    <li>
+      <span className="rank">2.</span>
+      <div className="release-icon" />
+      <span className="release-title">Crimson Ashes</span>
+    </li>
+
+    <li>
+      <span className="rank">3.</span>
+      <div className="release-icon" />
+      <span className="release-title">Echoes of You</span>
+    </li>
+
+    <li>
+      <span className="rank">4.</span>
+      <div className="release-icon" />
+      <span className="release-title">Falling Sakura</span>
+    </li>
+
+    <li>
+      <span className="rank">5.</span>
+      <div className="release-icon" />
+      <span className="release-title">Starlit Cage</span>
+    </li>
+
+    <li>
+      <span className="rank">6.</span>
+      <div className="release-icon" />
+      <span className="release-title">Velvet Ashes</span>
+    </li>
+
+    <li>
+      <span className="rank">7.</span>
+      <div className="release-icon" />
+      <span className="release-title">Moonlit Silence</span>
+    </li>
+
+    <li>
+      <span className="rank">8.</span>
+      <div className="release-icon" />
+      <span className="release-title">Starbound You</span>
+    </li>
+
+    <li>
+      <span className="rank">9.</span>
+      <div className="release-icon" />
+      <span className="release-title">Silver Petals</span>
+    </li>
+
+    <li>
+      <span className="rank">10.</span>
+      <div className="release-icon" />
+      <span className="release-title">Broken Halo</span>
+    </li>
+  </ol>
+</section>
+{/* 🔥 Most Popular */}
+<section>
+  <h2>Most Popular</h2>
+
+  <ol className="new-release-list">
+    <li>
+      <span className="rank">1.</span>
+      <div className="release-icon" />
+      <span className="release-title">Midnight Bloom</span>
+    </li>
+
+    <li>
+      <span className="rank">2.</span>
+      <div className="release-icon" />
+      <span className="release-title">Crimson Ashes</span>
+    </li>
+
+    <li>
+      <span className="rank">3.</span>
+      <div className="release-icon" />
+      <span className="release-title">Echoes of You</span>
+    </li>
+
+    <li>
+      <span className="rank">4.</span>
+      <div className="release-icon" />
+      <span className="release-title">Falling Sakura</span>
+    </li>
+
+    <li>
+      <span className="rank">5.</span>
+      <div className="release-icon" />
+      <span className="release-title">Starlit Cage</span>
+    </li>
+
+    <li>
+      <span className="rank">6.</span>
+      <div className="release-icon" />
+      <span className="release-title">Velvet Ashes</span>
+    </li>
+
+    <li>
+      <span className="rank">7.</span>
+      <div className="release-icon" />
+      <span className="release-title">Moonlit Silence</span>
+    </li>
+
+    <li>
+      <span className="rank">8.</span>
+      <div className="release-icon" />
+      <span className="release-title">Starbound You</span>
+    </li>
+
+    <li>
+      <span className="rank">9.</span>
+      <div className="release-icon" />
+      <span className="release-title">Silver Petals</span>
+    </li>
+
+    <li>
+      <span className="rank">10.</span>
+      <div className="release-icon" />
+      <span className="release-title">Broken Halo</span>
+    </li>
+  </ol>
+</section>
     </main>
   );
 }
