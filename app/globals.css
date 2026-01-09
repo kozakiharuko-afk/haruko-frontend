@@ -1,9 +1,10 @@
-/* ---------- Theme Variables ---------- */
+/* ======================================================
+   THEME VARIABLES
+   ====================================================== */
 
 /* 🌙 Dark Mode — Dark Violet */
 :root {
   --bg: #0e0b14;
-  --bg-header: #161022;
   --bg-input: #1e1530;
 
   --text: #f4f1fa;
@@ -12,12 +13,15 @@
 
   --accent: #7c5cff;
   --accent-soft: #2f2550;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.12);
 }
 
-/* ☀️ Light Mode — Peachy Orange */
+/* ☀️ Light Mode — Peachy */
 html.light {
   --bg: #fff6f0;
-  --bg-header: #ffffff;
   --bg-input: #ffe6d9;
 
   --text: #2b1b12;
@@ -26,9 +30,16 @@ html.light {
 
   --accent: #ff8a5b;
   --accent-soft: #ffe0d1;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.35);
 }
 
-/* ---------- Base ---------- */
+/* ======================================================
+   BASE
+   ====================================================== */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -41,14 +52,36 @@ body {
   color: var(--text);
 }
 
-/* ---------- Header ---------- */
-.header {
+/* ======================================================
+   LAYOUT CONTAINER
+   ====================================================== */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+/* ======================================================
+   HEADER (GLASSMORPHISM)
+   ====================================================== */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border-bottom: 1px solid var(--glass-border);
   padding: 1rem 2rem;
-  background: var(--bg-header);
-  border-bottom: 1px solid var(--border);
+
+  transition: background 0.3s ease, border 0.3s ease;
 }
 
 .logo {
@@ -61,6 +94,31 @@ body {
 .logo:hover {
   color: var(--accent);
 }
+
+/* Header layout groups */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ======================================================
+   HEADER CONTROLS
+   ====================================================== */
 
 .search {
   flex: 1;
@@ -80,7 +138,6 @@ body {
   outline: 2px solid var(--accent);
 }
 
-/* ---------- Actions ---------- */
 .actions {
   display: flex;
   align-items: center;
@@ -99,6 +156,32 @@ body {
   color: var(--accent);
 }
 
+/* Badge count */
+.badge {
+  position: relative;
+}
+
+.badge-count {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+
+  background: var(--accent);
+  color: white;
+
+  font-size: 0.65rem;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+
+  border-radius: 999px;
+  border: 2px solid var(--glass-bg);
+}
+
 .avatar {
   width: 32px;
   height: 32px;
@@ -110,19 +193,18 @@ body {
   justify-content: center;
 }
 
-/* ---------- Page ---------- */
-.content {
-  padding: 3rem 2rem;
-  font-size: 2rem;
-}
-
-/* ---------- Homepage ---------- */
+/* ======================================================
+   HOMEPAGE
+   ====================================================== */
 
 .home {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
+  padding: 2rem 0;
+}
+
+.home section {
+  max-width: 1200px;
+  margin: 0 auto 3rem;
+  padding: 0 2rem;
 }
 
 section h2 {
@@ -140,9 +222,11 @@ section h2 {
 .continue-card {
   min-width: 200px;
   padding: 1rem;
-  background: var(--bg-header);
+  border-radius: 14px;
+
+  background: var(--accent-soft);
   border: 1px solid var(--border);
-  border-radius: 10px;
+
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -164,17 +248,17 @@ section h2 {
 .card {
   min-width: 160px;
   padding: 1rem;
-  background: var(--bg-header);
+  border-radius: 14px;
+
+  background: var(--accent-soft);
   border: 1px solid var(--border);
-  border-radius: 10px;
+
   cursor: pointer;
 }
 
-/* Lists */
+/* Popular list */
 .list {
   list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
 .list li {
@@ -187,4 +271,72 @@ section h2 {
 .rank {
   font-weight: bold;
   color: var(--accent);
+}
+
+/* ======================================================
+   DROPDOWNS
+   ====================================================== */
+
+.dropdown-wrapper {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  width: 280px;
+
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  z-index: 100;
+}
+
+.dropdown-header {
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+
+.dropdown-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-list li {
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.dropdown-list li:hover {
+  background: var(--accent-soft);
+}
+
+.dropdown-empty {
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Clear notifications button */
+.clear-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.clear-btn:hover {
+  text-decoration: underline;
 }
