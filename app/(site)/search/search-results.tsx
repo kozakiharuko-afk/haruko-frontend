@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { BookOpen, BookText } from "lucide-react";
 
 type Series = {
   id: number;
   title: string;
   cover: string;
-  genre: string;
-  views: string;
-  type?: "manhwa" | "novel";
+  genres: string[];
+  type: "manhwa" | "novel";
   isPopular?: boolean;
   isNew?: boolean;
   hasNewChapter?: boolean;
@@ -18,38 +18,34 @@ type Series = {
 const allSeries: Series[] = [
   {
     id: 1,
-    title: "Jinx",
-    cover: "/covers/jinx.jpg",
-    genre: "Drama · Romance",
-    views: "3.7M",
+    title: "Midnight Bloom",
+    cover: "/covers/midnight-bloom.jpg",
+    genres: ["Drama", "Romance"],
     type: "manhwa",
-    isPopular: true,
+    hasNewChapter: true,
   },
   {
     id: 2,
-    title: "Midnight Bloom",
-    cover: "/covers/midnight-bloom.jpg",
-    genre: "Romance · Drama",
-    views: "2.1M",
-    type: "manhwa",
-    hasNewChapter: true,
+    title: "Crimson Ashes",
+    cover: "/covers/crimson-ashes.jpg",
+    genres: ["Fantasy"],
+    type: "novel",
   },
   {
     id: 3,
     title: "Echoes of You",
     cover: "/covers/echoes-of-you.jpg",
-    genre: "Romance",
-    views: "980K",
+    genres: ["Romance"],
     type: "manhwa",
     isNew: true,
   },
   {
     id: 4,
-    title: "Crimson Ashes",
-    cover: "/covers/crimson-ashes.jpg",
-    genre: "Fantasy",
-    views: "1.4M",
-    type: "novel",
+    title: "Fallen Petals",
+    cover: "/covers/fallen-petals.jpg",
+    genres: ["Drama"],
+    type: "manhwa",
+    isPopular: true,
   },
 ];
 
@@ -94,37 +90,55 @@ export default function SearchResults() {
               href={href}
               className="series-card"
             >
-              <div className="series-cover">
-                <img src={item.cover} alt={item.title} />
+              <div className="series-card-inner">
+                <div className="series-cover">
+                  <img src={item.cover} alt={item.title} />
 
-                {item.isPopular && (
-                  <span className="series-badge hot">
-                    HOT
+                  {/* 📘 Type badge */}
+                  <span className="series-type-badge">
+                    {item.type === "novel" ? (
+                      <BookText size={14} />
+                    ) : (
+                      <BookOpen size={14} />
+                    )}
                   </span>
-                )}
 
-                {!item.isPopular && item.hasNewChapter && (
-                  <span className="series-badge update">
-                    New Chapter
-                  </span>
-                )}
-
-                {!item.isPopular &&
-                  !item.hasNewChapter &&
-                  item.isNew && (
-                    <span className="series-badge new">
-                      NEW
+                  {/* 🔥 Priority badges */}
+                  {item.isPopular && (
+                    <span className="series-badge hot">
+                      HOT
                     </span>
                   )}
-              </div>
 
-              <h3 className="series-title">
-                {item.title}
-              </h3>
+                  {!item.isPopular && item.hasNewChapter && (
+                    <span className="series-badge update">
+                      New Chapter
+                    </span>
+                  )}
 
-              <div className="series-meta">
-                <span>{item.genre}</span>
-                <span>💚 {item.views}</span>
+                  {!item.isPopular &&
+                    !item.hasNewChapter &&
+                    item.isNew && (
+                      <span className="series-badge new">
+                        NEW
+                      </span>
+                    )}
+                </div>
+
+                <h3 className="series-title">
+                  {item.title}
+                </h3>
+
+                <div className="series-tags">
+                  {item.genres.map(tag => (
+                    <span
+                      key={tag}
+                      className="series-tag"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </Link>
           );

@@ -1753,6 +1753,28 @@ html.light .notif-icon {
   display: block;
 }
 
+.series-card-inner {
+  background: var(--surface);
+  border-radius: 18px;
+  padding: 14px;
+  height: 100%;
+}
+
+.series-tags {
+  margin-top: 0.35rem;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.series-tag {
+  font-size: 0.65rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
 /* ===============================
    BADGES
    =============================== */
@@ -1783,15 +1805,34 @@ html.light .notif-icon {
   background: linear-gradient(135deg, #00c896, #00e0a4);
 }
 
+.series-type-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  width: 26px;
+  height: 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--text);
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
 /* ===============================
    TITLE
    =============================== */
 
 .series-title {
-  margin-top: 0.6rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--text);
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
 }
 
 /* ======================================================
