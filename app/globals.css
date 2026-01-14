@@ -38,6 +38,28 @@ html.light {
   --glass-border: rgba(255, 255, 255, 0.45);
 }
 
+html.light .message-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* ======================================================
+   DARK MODE THEME (GLOBAL)
+   ====================================================== */
+html:not(.light) {
+  --bg: #0b0a13;              /* page background */
+  --bg-soft: #121020;        /* sidebar background */
+  --bg-input: #16132b;       /* inputs */
+  --glass-bg: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.08);
+
+  --text: #f1f0ff;
+  --muted: #9a96c7;
+  --border: rgba(255,255,255,0.12);
+
+  --accent: #a78bfa;
+  --accent-soft: rgba(167,139,250,0.18);
+}
+
 /* ======================================================
    ICON COLORS
    ====================================================== */
@@ -2016,7 +2038,7 @@ html.light {
 }
 
 .message-item:hover {
-  background: var(--glass-bg);
+  background: var(--accent-soft);
 }
 
 .message-avatar {
@@ -2114,9 +2136,20 @@ html.light {
 }
 
 .chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   padding: 14px;
-  border-bottom: 1px solid var(--glass-border);
   font-weight: 500;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.10),
+    rgba(255,255,255,0.02)
+  );
+
+  border-bottom: 1px solid rgba(255,255,255,0.14);
 }
 
 .chat-messages {
@@ -2133,7 +2166,9 @@ html.light {
   max-width: 70%;
   padding: 10px 14px;
   border-radius: 14px;
-  background: var(--glass-bg);
+
+  background: rgba(255,255,255,0.12);
+  color: var(--text);
 }
 
 .chat-message.mine {
@@ -2147,6 +2182,15 @@ html.light {
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--bg-input);
+}
+
+.chat-input {
+  background: rgba(255,255,255,0.04);
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+
+.chat-input input {
+  background: rgba(255,255,255,0.08);
 }
 
 /* ======================================================
@@ -2224,12 +2268,6 @@ html.light {
 /* ======================================================
    CHAT MENU (3-DOT)
    ====================================================== */
-
-.chat-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
 .chat-menu {
   position: relative;
@@ -2314,6 +2352,11 @@ html.light {
 
 .chat-send-btn:hover {
   filter: brightness(0.95);
+}
+
+/* 🔧 DARK MODE FIX — SEND ICON */
+html:not(.light) .chat-send-btn {
+  color: var(--text);
 }
 
 /* Multiline chat input */
@@ -2417,8 +2460,12 @@ html.light {
 
 .messages-sidebar {
   padding: 16px;
-  border-right: 1px solid var(--glass-border);
   overflow-y: auto;
+}
+
+.messages-sidebar {
+  background: var(--bg-soft);
+  border-right: 1px solid rgba(255,255,255,0.12);
 }
 
 .messages-chat {
@@ -2443,6 +2490,10 @@ html.light {
 
 .message-item.active:hover {
   background: var(--accent-soft);
+}
+
+.message-item {
+  border-radius: 12px;
 }
 
 .filter-count {
@@ -2578,9 +2629,9 @@ html.light {
   gap: 4px;
 }
 
-.messages-filter button.active {
-  background: var(--accent-soft);
-  border-color: transparent;
+/* 🔧 DARK MODE FIX — FILTER TEXT */
+html:not(.light) .messages-filter button {
+  color: var(--text);
 }
 
 /* ======================================================

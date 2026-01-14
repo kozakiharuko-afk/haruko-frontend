@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "../AuthProvider";
 
-import { useUnreadMessages } from "./messages/useUnreadMessages";
+import { useUnreadMessages } from "./messages/UnreadMessagesContext";
 import SearchBox from "./components/SearchBox";
 import NotificationBell from "./components/NotificationBell";
 import AvatarMenu from "./components/AvatarMenu";

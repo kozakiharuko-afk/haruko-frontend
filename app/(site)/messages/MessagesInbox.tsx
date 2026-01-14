@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { PenSquare, BellOff } from "lucide-react";
+import { useUnreadMessages } from "./UnreadMessagesContext";
 
 type Conversation = {
   conversationId: string;
@@ -20,19 +21,15 @@ export default function MessagesInbox() {
   const listRef = useRef<HTMLDivElement>(null);
   const autoFiltered = useRef(false);
   const lastSelectedIndex = useRef<number | null>(null);
+  const hasMounted = useRef(false);
+
+  const { setUnreadCount } = useUnreadMessages();
 
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [undoData, setUndoData] = useState<Conversation[] | null>(null);
 
-  const [filter, setFilter] = useState<"all" | "unread" | "muted">(() => {
-    if (typeof window === "undefined") return "all";
-    return (
-      (localStorage.getItem("messages-filter") as
-        | "all"
-        | "unread"
-        | "muted") || "all"
-    );
-  });
+  // ✅ FIX: hydration-safe default
+  const [filter, setFilter] = useState<"all" | "unread" | "muted">("all");
 
   const [conversations, setConversations] = useState<Conversation[]>([
     {
@@ -58,11 +55,13 @@ export default function MessagesInbox() {
     },
   ]);
 
+  /* ================= COUNTS ================= */
+
   const totalCount = conversations.length;
-  const unreadCount = conversations.filter((c) => c.unread).length;
+  const localUnreadCount = conversations.filter((c) => c.unread).length;
   const mutedCount = conversations.filter((c) => c.muted).length;
 
-  /* ================= FILTER LOGIC ================= */
+  /* ================= FILTERED LIST ================= */
 
   const filtered = conversations.filter((c) => {
     if (filter === "unread") return c.unread;
@@ -72,17 +71,46 @@ export default function MessagesInbox() {
 
   /* ================= EFFECTS ================= */
 
+  // ✅ FIX: load filter AFTER mount
+  useEffect(() => {
+    if (hasMounted.current) return;
+    hasMounted.current = true;
+
+    const saved = localStorage.getItem("messages-filter") as
+      | "all"
+      | "unread"
+      | "muted"
+      | null;
+
+    if (saved) setFilter(saved);
+  }, []);
+
+  // 🔔 Sync unread badge
+  useEffect(() => {
+    setUnreadCount(localUnreadCount);
+  }, [localUnreadCount, setUnreadCount]);
+
+  // 💾 Persist filter
   useEffect(() => {
     localStorage.setItem("messages-filter", filter);
   }, [filter]);
 
+  // 🔁 Auto-switch to unread ONCE
   useEffect(() => {
-    if (unreadCount > 0 && filter === "all" && !autoFiltered.current) {
+    if (localUnreadCount > 0 && filter === "all" && !autoFiltered.current) {
       setFilter("unread");
       autoFiltered.current = true;
     }
-  }, [unreadCount, filter]);
+  }, [localUnreadCount, filter]);
 
+  // 🔄 Reset auto-filter
+  useEffect(() => {
+    if (localUnreadCount === 0) {
+      autoFiltered.current = false;
+    }
+  }, [localUnreadCount]);
+
+  // 📜 Restore scroll per filter
   useEffect(() => {
     const key = `messages-scroll-${filter}`;
     const saved = sessionStorage.getItem(key);
@@ -93,18 +121,13 @@ export default function MessagesInbox() {
 
   /* ================= SELECTION ================= */
 
-  const toggleSelect = (
-    id: string,
-    index: number,
-    shiftKey: boolean
-  ) => {
+  const toggleSelect = (id: string, index: number, shiftKey: boolean) => {
     setSelected((prev) => {
       const next = new Set(prev);
 
       if (shiftKey && lastSelectedIndex.current !== null) {
         const start = Math.min(lastSelectedIndex.current, index);
         const end = Math.max(lastSelectedIndex.current, index);
-
         for (let i = start; i <= end; i++) {
           next.add(filtered[i].conversationId);
         }
@@ -132,9 +155,7 @@ export default function MessagesInbox() {
   const markSelectedRead = () => {
     setConversations((prev) =>
       prev.map((c) =>
-        selected.has(c.conversationId)
-          ? { ...c, unread: false }
-          : c
+        selected.has(c.conversationId) ? { ...c, unread: false } : c
       )
     );
     clearSelection();
@@ -143,9 +164,7 @@ export default function MessagesInbox() {
   const muteSelected = () => {
     setConversations((prev) =>
       prev.map((c) =>
-        selected.has(c.conversationId)
-          ? { ...c, muted: true }
-          : c
+        selected.has(c.conversationId) ? { ...c, muted: true } : c
       )
     );
     clearSelection();
@@ -153,32 +172,17 @@ export default function MessagesInbox() {
 
   const deleteSelected = () => {
     setConversations((prev) => {
-      const removed = prev.filter((c) =>
-        selected.has(c.conversationId)
-      );
-
+      const removed = prev.filter((c) => selected.has(c.conversationId));
       setUndoData(removed);
-
-      setTimeout(() => {
-        setUndoData(null);
-      }, 4000);
-
-      return prev.filter(
-        (c) => !selected.has(c.conversationId)
-      );
+      setTimeout(() => setUndoData(null), 4000);
+      return prev.filter((c) => !selected.has(c.conversationId));
     });
-
     clearSelection();
   };
 
   const undoDelete = () => {
     if (!undoData) return;
-
-    setConversations((prev) => [
-      ...undoData,
-      ...prev,
-    ]);
-
+    setConversations((prev) => [...undoData, ...prev]);
     setUndoData(null);
   };
 
@@ -192,7 +196,6 @@ export default function MessagesInbox() {
 
   return (
     <div className="messages-page">
-      {/* Header */}
       <div className="messages-header">
         <h1 className="messages-title">Messages</h1>
         <button className="messages-compose-btn">
@@ -200,70 +203,31 @@ export default function MessagesInbox() {
         </button>
       </div>
 
-      {/* Search */}
       <div className="messages-search">
         <input placeholder="Search messages" />
       </div>
 
-      {/* Filters */}
       <div className="messages-filter">
-        <button
-          className={filter === "all" ? "active" : ""}
-          onClick={() => setFilter("all")}
-        >
+        <button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")}>
           All · <span className="filter-count">{totalCount}</span>
         </button>
 
-        <button
-          className={filter === "unread" ? "active" : ""}
-          onClick={() => setFilter("unread")}
-        >
-          Unread · <span className="filter-count">{unreadCount}</span>
+        <button className={filter === "unread" ? "active" : ""} onClick={() => setFilter("unread")}>
+          Unread · <span className="filter-count">{localUnreadCount}</span>
         </button>
 
-        <button
-          className={filter === "muted" ? "active" : ""}
-          onClick={() => setFilter("muted")}
-        >
+        <button className={filter === "muted" ? "active" : ""} onClick={() => setFilter("muted")}>
           Muted · <span className="filter-count">{mutedCount}</span>
         </button>
       </div>
 
-      {unreadCount > 0 && (
+      {localUnreadCount > 0 && (
         <button className="clear-unread-btn" onClick={clearAllUnread}>
           Clear all unread
         </button>
       )}
 
-      {selected.size > 0 && (
-        <div className="batch-bar">
-          <span>{selected.size} selected</span>
-          <div className="batch-actions">
-            <button onClick={selectAllFiltered}>Select all</button>
-            <button onClick={markSelectedRead}>Mark as read</button>
-            <button onClick={muteSelected}>Mute</button>
-            <button className="danger" onClick={deleteSelected}>
-              Delete
-            </button>
-            <button onClick={clearSelection}>Cancel</button>
-          </div>
-        </div>
-      )}
-
-      {/* List */}
-      <div
-        className="messages-list"
-        ref={listRef}
-        onScroll={() => {
-          const key = `messages-scroll-${filter}`;
-          if (listRef.current) {
-            sessionStorage.setItem(
-              key,
-              String(listRef.current.scrollTop)
-            );
-          }
-        }}
-      >
+      <div className="messages-list" ref={listRef}>
         {filtered.map((c, index) => (
           <MessageItem
             key={c.conversationId}
@@ -277,7 +241,6 @@ export default function MessagesInbox() {
         ))}
       </div>
 
-      {/* Undo snackbar */}
       {undoData && (
         <div className="undo-snackbar">
           <span>Conversation deleted</span>
@@ -315,11 +278,7 @@ function MessageItem({
   filter: "all" | "unread" | "muted";
   index: number;
   selectedIds: Set<string>;
-  onToggleSelect: (
-    id: string,
-    index: number,
-    shiftKey: boolean
-  ) => void;
+  onToggleSelect: (id: string, index: number, shiftKey: boolean) => void;
 }) {
   return (
     <div
@@ -330,24 +289,17 @@ function MessageItem({
       `}
     >
       <input
-  type="checkbox"
-  className="message-checkbox"
-  checked={selectedIds.has(conversationId)}
-  onClick={(e) => {
-    e.stopPropagation();
-    onToggleSelect(
-      conversationId,
-      index,
-      (e as React.MouseEvent).shiftKey
-    );
-  }}
-  readOnly
-/>
+        type="checkbox"
+        className="message-checkbox"
+        checked={selectedIds.has(conversationId)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggleSelect(conversationId, index, (e as React.MouseEvent).shiftKey);
+        }}
+        readOnly
+      />
 
-      <Link
-        href={`/messages/${conversationId}`}
-        className="message-link"
-      >
+      <Link href={`/messages/${conversationId}`} className="message-link">
         <img src="/avatar.jpg" className="message-avatar" />
 
         <div className="message-content">
@@ -367,10 +319,7 @@ function MessageItem({
             <span className={`message-preview ${typing ? "typing" : ""}`}>
               {message}
             </span>
-
-            {unread && !isActive && !muted && (
-              <span className="unread-dot" />
-            )}
+            {unread && !isActive && !muted && <span className="unread-dot" />}
           </div>
         </div>
       </Link>

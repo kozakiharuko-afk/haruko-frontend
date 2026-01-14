@@ -1,5 +1,5 @@
-
 import SiteHeader from "./SiteHeader";
+import { UnreadMessagesProvider } from "./messages/UnreadMessagesContext";
 
 export default function SiteLayout({
   children,
@@ -7,9 +7,11 @@ export default function SiteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <UnreadMessagesProvider>
       <SiteHeader />
-      <main className="site-main">{children}</main>
-    </>
+      <main className="site-main">
+        {children}
+      </main>
+    </UnreadMessagesProvider>
   );
 }
