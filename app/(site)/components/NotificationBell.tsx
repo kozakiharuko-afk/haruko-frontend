@@ -1,100 +1,41 @@
 "use client";
 
+import Link from "next/link";
+import { useNotifications } from "@/app/(site)/notifications/NotificationsContext";
 import { useState } from "react";
 import { Bell, BookOpen, Book } from "lucide-react";
-
-type Notification = {
-  id: number;
-  type: "manhwa" | "novel";
-  title: string;
-  extra: number;
-  time: string;
-  unread: boolean;
-  group: "today" | "earlier";
-};
 
 export default function NotificationBell() {
   const [showNotifications, setShowNotifications] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
 
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: 1,
-      type: "manhwa",
-      title: "Midnight Bloom",
-      extra: 3,
-      time: "2h",
-      unread: true,
-      group: "today",
-    },
-    {
-      id: 2,
-      type: "novel",
-      title: "Crimson Ashes",
-      extra: 1,
-      time: "5h",
-      unread: true,
-      group: "today",
-    },
-    {
-      id: 3,
-      type: "manhwa",
-      title: "Echoes of You",
-      extra: 0,
-      time: "Yesterday",
-      unread: false,
-      group: "earlier",
-    },
-  ]);
+  const {
+    notifications,
+    unreadCount,
+    markAsRead,
+    markAllAsRead,
+    clearAll,
+  } = useNotifications();
 
-  const notificationCount = notifications.filter(n => n.unread).length;
-
-  const markAsRead = (id: number) => {
-    setNotifications(prev =>
-      prev.map(n =>
-        n.id === id ? { ...n, unread: false } : n
-      )
-    );
-  };
-
-  const markAllAsRead = () => {
-    setNotifications(prev =>
-      prev.map(n => ({ ...n, unread: false }))
-    );
-  };
-
-  const clearAll = () => {
-    if (isClearing) return;
-
-    setIsClearing(true);
-    setShowNotifications(false);
-
-    setTimeout(() => {
-      setNotifications([]);
-      setIsClearing(false);
-    }, 180);
-  };
+  /* ================= GROUPS ================= */
 
   const todayNotifications = notifications.filter(n => n.group === "today");
   const earlierNotifications = notifications.filter(n => n.group === "earlier");
 
+  /* ================= RENDER ================= */
+
   return (
     <div className="dropdown-wrapper">
       <button
-        className={`icon-btn badge ${
-          notificationCount === 0 ? "read" : ""
-        }`}
+        className={`icon-btn badge ${unreadCount === 0 ? "read" : ""}`}
         onClick={() => {
-          setShowNotifications(v => {
-            const next = !v;
-            if (next) markAllAsRead();
-            return next;
-          });
+          setShowNotifications(v => !v);
+          markAllAsRead();
         }}
       >
         <Bell size={18} />
-        {notificationCount > 0 && (
-          <span className="badge-count">{notificationCount}</span>
+        {unreadCount > 0 && (
+          <span className="badge-count">{unreadCount}</span>
         )}
       </button>
 
@@ -165,16 +106,31 @@ export default function NotificationBell() {
 
           {notifications.length === 0 && (
             <li className="dropdown-empty">
-              You're all caught up ✨
+              You're all caught up.
             </li>
           )}
         </ul>
 
         <div className="dropdown-footer split">
-          <button className="dropdown-action view-all">View All</button>
+          <Link
+            href="/notifications"
+            className="dropdown-action view-all"
+            onClick={() => setShowNotifications(false)}
+          >
+            View All
+          </Link>
+
           <button
             className="dropdown-action clear-all"
-            onClick={clearAll}
+            onClick={() => {
+              if (isClearing) return;
+              setIsClearing(true);
+              setShowNotifications(false);
+              setTimeout(() => {
+                clearAll();
+                setIsClearing(false);
+              }, 180);
+            }}
             disabled={isClearing}
           >
             Clear All

@@ -1,5 +1,6 @@
 import SiteHeader from "./SiteHeader";
 import { UnreadMessagesProvider } from "./messages/UnreadMessagesContext";
+import { NotificationsProvider } from "./notifications/NotificationsContext";
 
 export default function SiteLayout({
   children,
@@ -8,10 +9,12 @@ export default function SiteLayout({
 }) {
   return (
     <UnreadMessagesProvider>
-      <SiteHeader />
-      <main className="site-main">
-        {children}
-      </main>
+      <NotificationsProvider>
+        <SiteHeader />
+        <main className="site-main">
+          {children}
+        </main>
+      </NotificationsProvider>
     </UnreadMessagesProvider>
   );
 }

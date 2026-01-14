@@ -1332,8 +1332,8 @@ html:not(.light) .new-release-item:hover .new-release-cover {
   color: var(--muted);
 }
 
-.dropdown-action.view-all:hover {
-  text-decoration: underline;
+.dropdown-action.view-all {
+  text-decoration: none;
 }
 
 /* Clear All – soft destructive */
@@ -1545,6 +1545,136 @@ html.light .notif-icon {
 .icon-btn.badge.read .badge-count {
   opacity: 0;
   transform: scale(0.85);
+}
+
+/* ======================================================
+   NOTIFICATIONS PAGE
+   ====================================================== */
+
+.notifications-page {
+  max-width: 680px;
+  padding: 24px;
+
+  /* ⬇️ ADDED: page controls vertical layout */
+  min-height: calc(100vh - var(--header-height, 72px));
+  display: flex;
+  flex-direction: column;
+}
+
+.notifications-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.notifications-section {
+  margin: 14px 0 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ⬇️ FIXED: single, correct empty state */
+.notifications-empty {
+  flex: 1;                     /* fills remaining space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.55); /* grayish-black */
+  text-align: center;
+}
+
+/* ======================================================
+   NOTIFICATIONS HEADER
+   ====================================================== */
+
+.notifications-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.notifications-clear {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.notifications-clear:hover {
+  text-decoration: underline;
+}
+
+/* ======================================================
+   NOTIFICATION ITEM LAYOUT
+   ====================================================== */
+
+.notif-content {
+  flex: 1;
+}
+
+.notif-top {
+  display: grid;
+  grid-template-columns: 1fr auto; /* LEFT grows, RIGHT is fixed */
+  align-items: center;
+  gap: 12px;
+}
+
+.notif-title {
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.notif-time {
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* ======================================================
+   NOTIFICATION BLOCK (PAGE ONLY)
+   ====================================================== */
+
+.notification-block {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+/* ======================================================
+   COVER STRIP
+   ====================================================== */
+
+.notif-covers {
+  margin-left: 44px; /* aligns under content, not icon */
+  margin-top: 8px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 56px);
+  gap: 8px;
+}
+
+.notif-cover {
+  width: 56px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 8px;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  background: #eee;
 }
 
 /* ======================================================
