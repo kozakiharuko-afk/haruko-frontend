@@ -19,7 +19,7 @@ const fuzzyMatch = (text: string, query: string) => {
 
     if (found === -1) return null;
 
-    score += found === ti ? 2 : 1; // reward consecutive matches
+    score += found === ti ? 2 : 1;
     ti = found + 1;
   }
 
@@ -59,6 +59,7 @@ export default function SearchBox() {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isKeyboardNav, setIsKeyboardNav] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [isOpen, setIsOpen] = useState(false); // ✅ NEW
 
   const searchRef = useRef<HTMLDivElement>(null);
 
@@ -91,11 +92,10 @@ export default function SearchBox() {
   };
 
   const closeSearch = () => {
-  setQuery("");            // 👈 ADD THIS LINE
-  setResults([]);
-  setActiveIndex(-1);
-  setIsKeyboardNav(false);
-};
+    setIsOpen(false);      // ✅ HARD COLLAPSE
+    setActiveIndex(-1);
+    setIsKeyboardNav(false);
+  };
 
   /* ================= LIVE SEARCH ================= */
 
@@ -132,7 +132,6 @@ export default function SearchBox() {
 
   useEffect(() => {
     closeSearch();
-    setQuery(""); // 👈 adjustment
   }, [pathname]);
 
   /* ================= RECENT SEARCHES ================= */
@@ -181,7 +180,9 @@ export default function SearchBox() {
         onChange={(e) => {
           setQuery(e.target.value);
           setActiveIndex(-1);
+          setIsOpen(true); // ✅ OPEN on typing
         }}
+        onFocus={() => setIsOpen(true)} // ✅ OPEN on focus
         onKeyDown={(e) => {
           setIsKeyboardNav(true);
 
@@ -222,7 +223,7 @@ export default function SearchBox() {
         }}
       />
 
-      {(results.length > 0 || recentSearches.length > 0) && (
+      {isOpen && (
         <div
           className="search-dropdown"
           onMouseEnter={() => setIsKeyboardNav(false)}
