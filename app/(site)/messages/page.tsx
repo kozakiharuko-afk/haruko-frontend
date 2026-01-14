@@ -1,19 +1,23 @@
+import Link from "next/link";
+
 export default function MessagesPage() {
   return (
-    <main className="page">
-      <h1>Messages</h1>
+    <div className="messages-empty">
+      <div className="messages-empty-content">
+        <p className="messages-empty-text">
+          Select a conversation to start chatting
+        </p>
 
-      <ul className="message-list">
-        <li>
-          <strong>Admin</strong>
-          <p>Welcome to Haruko Project 💖</p>
-        </li>
+        <div className="messages-empty-actions">
+          <button className="messages-empty-btn primary">
+            New conversation
+          </button>
 
-        <li>
-          <strong>Reader123</strong>
-          <p>OMG have you read the latest chapter??</p>
-        </li>
-      </ul>
-    </main>
+          <button className="messages-empty-btn">
+            Write a message
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

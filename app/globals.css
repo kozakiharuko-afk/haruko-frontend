@@ -1971,6 +1971,232 @@ html.light {
 }
 
 /* ======================================================
+   CHAT / MESSAGES
+   ====================================================== */
+
+.messages-page {
+  max-width: 420px;
+  padding: 16px;
+}
+
+.messages-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* Search */
+.messages-search {
+  margin-bottom: 12px;
+}
+
+.messages-search input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  font-size: 0.85rem;
+}
+
+/* List */
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Item */
+.message-item {
+  display: flex;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.message-item:hover {
+  background: var(--glass-bg);
+}
+
+.message-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+
+/* Content */
+.message-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.message-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.message-time {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+/* Preview */
+.message-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-preview {
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.message-preview.typing {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.unread-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+/* ======================================================
+   CHAT PAGE
+   ====================================================== */
+
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--header-height));
+}
+
+.chat-header {
+  padding: 14px;
+  border-bottom: 1px solid var(--glass-border);
+  font-weight: 500;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Chat bubbles */
+.chat-message {
+  max-width: 70%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--glass-bg);
+}
+
+.chat-message.mine {
+  align-self: flex-end;
+  background: var(--accent-soft);
+}
+
+.chat-input {
+  padding: 12px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.chat-input input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+}
+
+/* ======================================================
+   MESSAGES LAYOUT
+   ====================================================== */
+
+.messages-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  height: calc(100vh - var(--header-height));
+}
+
+.messages-sidebar {
+  padding: 16px;
+  border-right: 1px solid var(--glass-border);
+  overflow-y: auto;
+}
+
+.messages-chat {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+/* ======================================================
+   EMPTY CHAT STATE
+   ====================================================== */
+
+.messages-empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.messages-empty-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.messages-empty-text {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Actions */
+.messages-empty-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.messages-empty-btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.messages-empty-btn:hover {
+  background: var(--glass-bg);
+}
+
+.messages-empty-btn.primary {
+  background: var(--accent-soft);
+  border-color: transparent;
+}
+
+/* ======================================================
    MOBILE
    ====================================================== */
 
