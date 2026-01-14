@@ -91,10 +91,11 @@ export default function SearchBox() {
   };
 
   const closeSearch = () => {
-    setResults([]);
-    setActiveIndex(-1);
-    setIsKeyboardNav(false);
-  };
+  setQuery("");            // 👈 ADD THIS LINE
+  setResults([]);
+  setActiveIndex(-1);
+  setIsKeyboardNav(false);
+};
 
   /* ================= LIVE SEARCH ================= */
 
