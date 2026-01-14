@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "../AuthProvider";
 
+import { useUnreadMessages } from "./messages/useUnreadMessages";
 import SearchBox from "./components/SearchBox";
 import NotificationBell from "./components/NotificationBell";
 import AvatarMenu from "./components/AvatarMenu";
@@ -13,6 +14,7 @@ import { Moon, Sun, MessageCircle } from "lucide-react";
 export default function SiteHeader() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const { session } = useAuth();
+  const { unreadCount } = useUnreadMessages();
 
   /* ================= THEME ================= */
 
@@ -53,20 +55,28 @@ export default function SiteHeader() {
 
           {/* Theme toggle */}
           <button
-  className={`theme-toggle ${theme}`}
-  onClick={toggleTheme}
-  aria-label="Toggle theme"
->
-  <span className="toggle-icon">
-    {theme === "dark" ? <Moon size={16} /> : <Sun size={16} />}
-  </span>
-</button>
-
-          {/* Messages */}
-          <button className="icon-btn badge">
-            <MessageCircle size={18} />
-            <span className="badge-count">1</span>
+            className={`theme-toggle ${theme}`}
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+          >
+            <span className="toggle-icon">
+              {theme === "dark" ? <Moon size={16} /> : <Sun size={16} />}
+            </span>
           </button>
+
+          {/* Messages (CLICKABLE → /messages) */}
+          <Link
+  href="/messages"
+  className="icon-btn badge"
+  aria-label="Messages"
+>
+  <MessageCircle size={18} />
+  {unreadCount > 0 && (
+    <span className="badge-count">
+      {unreadCount}
+    </span>
+  )}
+</Link>
 
           {/* Notifications */}
           <NotificationBell />
