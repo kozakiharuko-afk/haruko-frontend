@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 type Series = {
@@ -8,6 +9,7 @@ type Series = {
   cover: string;
   genre: string;
   views: string;
+  type?: "manhwa" | "novel";
   isPopular?: boolean;
   isNew?: boolean;
   hasNewChapter?: boolean;
@@ -20,6 +22,7 @@ const allSeries: Series[] = [
     cover: "/covers/jinx.jpg",
     genre: "Drama · Romance",
     views: "3.7M",
+    type: "manhwa",
     isPopular: true,
   },
   {
@@ -28,6 +31,7 @@ const allSeries: Series[] = [
     cover: "/covers/midnight-bloom.jpg",
     genre: "Romance · Drama",
     views: "2.1M",
+    type: "manhwa",
     hasNewChapter: true,
   },
   {
@@ -36,6 +40,7 @@ const allSeries: Series[] = [
     cover: "/covers/echoes-of-you.jpg",
     genre: "Romance",
     views: "980K",
+    type: "manhwa",
     isNew: true,
   },
   {
@@ -44,6 +49,7 @@ const allSeries: Series[] = [
     cover: "/covers/crimson-ashes.jpg",
     genre: "Fantasy",
     views: "1.4M",
+    type: "novel",
   },
 ];
 
@@ -72,36 +78,57 @@ export default function SearchResults() {
       </p>
 
       <div className="series-grid">
-        {results.map(item => (
-          <div key={item.id} className="series-card">
-            <div className="series-cover">
-              <img src={item.cover} alt={item.title} />
+        {results.map(item => {
+          const slug = item.title
+            .toLowerCase()
+            .replace(/\s+/g, "-");
 
-              {item.isPopular && (
-                <span className="series-badge hot">HOT</span>
-              )}
+          const href =
+            item.type === "novel"
+              ? `/novel/${slug}`
+              : `/manhwa/${slug}`;
 
-              {!item.isPopular && item.hasNewChapter && (
-                <span className="series-badge update">
-                  New Chapter
-                </span>
-              )}
+          return (
+            <Link
+              key={item.id}
+              href={href}
+              className="series-card"
+            >
+              <div className="series-cover">
+                <img src={item.cover} alt={item.title} />
 
-              {!item.isPopular &&
-                !item.hasNewChapter &&
-                item.isNew && (
-                  <span className="series-badge new">NEW</span>
+                {item.isPopular && (
+                  <span className="series-badge hot">
+                    HOT
+                  </span>
                 )}
-            </div>
 
-            <h3 className="series-title">{item.title}</h3>
+                {!item.isPopular && item.hasNewChapter && (
+                  <span className="series-badge update">
+                    New Chapter
+                  </span>
+                )}
 
-            <div className="series-meta">
-              <span>{item.genre}</span>
-              <span>💚 {item.views}</span>
-            </div>
-          </div>
-        ))}
+                {!item.isPopular &&
+                  !item.hasNewChapter &&
+                  item.isNew && (
+                    <span className="series-badge new">
+                      NEW
+                    </span>
+                  )}
+              </div>
+
+              <h3 className="series-title">
+                {item.title}
+              </h3>
+
+              <div className="series-meta">
+                <span>{item.genre}</span>
+                <span>💚 {item.views}</span>
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </main>
   );
