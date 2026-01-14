@@ -330,18 +330,19 @@ function MessageItem({
       `}
     >
       <input
-        type="checkbox"
-        className="message-checkbox"
-        checked={selectedIds.has(conversationId)}
-        onChange={(e) =>
-          onToggleSelect(
-            conversationId,
-            index,
-            e.shiftKey
-          )
-        }
-        onClick={(e) => e.stopPropagation()}
-      />
+  type="checkbox"
+  className="message-checkbox"
+  checked={selectedIds.has(conversationId)}
+  onClick={(e) => {
+    e.stopPropagation();
+    onToggleSelect(
+      conversationId,
+      index,
+      (e as React.MouseEvent).shiftKey
+    );
+  }}
+  readOnly
+/>
 
       <Link
         href={`/messages/${conversationId}`}
