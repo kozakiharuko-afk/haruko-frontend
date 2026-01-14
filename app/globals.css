@@ -1722,6 +1722,12 @@ html.light .notif-icon {
   display: block;
 }
 
+.series-card {
+  display: block; /* 👈 THIS is the fix */
+  text-decoration: none;
+  color: inherit;
+}
+
 /* ===============================
    BADGES
    =============================== */
