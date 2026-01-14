@@ -9,6 +9,7 @@ export default function ThemeProvider({
 }: {
   children: React.ReactNode;
 }) {
+
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {

@@ -1,16 +1,27 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useAuth } from "../AuthProvider";
+
+import SearchBox from "./components/SearchBox";
+import NotificationBell from "./components/NotificationBell";
+import AvatarMenu from "./components/AvatarMenu";
+
+import { Moon, Sun, MessageCircle } from "lucide-react";
 
 export default function SiteHeader() {
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const { session } = useAuth();
 
-  /* ---------------- Theme ---------------- */
+  /* ================= THEME ================= */
 
   useEffect(() => {
-    const saved = localStorage.getItem("theme") as "dark" | "light" | null;
+    const saved = localStorage.getItem("theme") as
+      | "dark"
+      | "light"
+      | null;
+
     if (saved === "light") {
       setTheme("light");
       document.documentElement.classList.add("light");
@@ -25,63 +36,46 @@ export default function SiteHeader() {
   };
 
   return (
-    <>
-      <header className="header">
-        <div className="container header-inner">
-          {/* LEFT */}
-          <div className="header-left">
-            <Link href="/" className="logo">
-              Haruko Project
-            </Link>
+    <header className="header">
+      <div className="header-inner">
 
-            <input
-              className="search"
-              type="text"
-              placeholder="Search series..."
-            />
-          </div>
+        {/* ================= LEFT ================= */}
+        <div className="header-left">
+          <Link href="/" className="logo">
+            <img src="/logo/haruko-logo.png" alt="Haruko" />
+          </Link>
 
-          {/* RIGHT */}
-          <div className="header-right">
-            <button
-              className="icon-btn hamburger"
-              onClick={() => setShowMobileMenu((v) => !v)}
-            >
-              ☰
-            </button>
-
-            {/* 🌙 Theme toggle */}
-            <button className="icon-btn" onClick={toggleTheme}>
-              {theme === "dark" ? "🌙" : "☀️"}
-            </button>
-
-            {/* 💬 Messages */}
-            <button className="icon-btn badge">
-              💬
-              <span className="badge-count">1</span>
-            </button>
-
-            {/* 🔔 Notifications */}
-            <button className="icon-btn badge">
-              🔔
-              <span className="badge-count">2</span>
-            </button>
-
-            {/* 👤 Avatar */}
-            <div className="avatar">👤</div>
-          </div>
+          <SearchBox />
         </div>
-      </header>
 
-      {/* 📱 Mobile menu */}
-      {showMobileMenu && (
-        <div className="mobile-menu">
-          <input
-            className="search mobile-search"
-            placeholder="Search series..."
-          />
+        {/* ================= RIGHT ================= */}
+        <div className="header-right">
+
+          {/* Theme toggle */}
+          <button
+  className={`theme-toggle ${theme}`}
+  onClick={toggleTheme}
+  aria-label="Toggle theme"
+>
+  <span className="toggle-icon">
+    {theme === "dark" ? <Moon size={16} /> : <Sun size={16} />}
+  </span>
+</button>
+
+          {/* Messages */}
+          <button className="icon-btn badge">
+            <MessageCircle size={18} />
+            <span className="badge-count">1</span>
+          </button>
+
+          {/* Notifications */}
+          <NotificationBell />
+
+          {/* Avatar */}
+          <AvatarMenu />
+
         </div>
-      )}
-    </>
+      </div>
+    </header>
   );
 }

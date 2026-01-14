@@ -1,5 +1,11 @@
 import "./globals.css";
 import ThemeProvider from "./ThemeProvider";
+import { AuthProvider } from "./AuthProvider";
+
+export const metadata = {
+  title: "Haruko Project",
+  description: "Read Manhwa & Novels on Haruko",
+};
 
 export default function RootLayout({
   children,
@@ -9,9 +15,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            {children}
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

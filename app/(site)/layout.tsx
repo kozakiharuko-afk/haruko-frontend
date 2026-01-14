@@ -1,3 +1,4 @@
+
 import SiteHeader from "./SiteHeader";
 
 export default function SiteLayout({
@@ -8,7 +9,7 @@ export default function SiteLayout({
   return (
     <>
       <SiteHeader />
-      {children}
+      <main className="site-main">{children}</main>
     </>
   );
 }
