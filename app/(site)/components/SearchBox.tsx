@@ -83,13 +83,17 @@ export default function SearchBox() {
   };
 
   const goToSearchResults = () => {
-    const trimmed = query.trim();
-    if (!trimmed) return;
+  const trimmed = query.trim();
 
+  if (trimmed) {
     saveRecent(trimmed);
     router.push(`/search?q=${encodeURIComponent(trimmed)}`);
-    closeSearch();
-  };
+  } else {
+    router.push("/search"); // 👈 show ALL series
+  }
+
+  closeSearch();
+};
 
   const closeSearch = () => {
     setIsOpen(false);      // ✅ HARD COLLAPSE
