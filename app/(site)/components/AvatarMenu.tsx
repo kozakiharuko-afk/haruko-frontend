@@ -50,9 +50,10 @@ export default function AvatarMenu() {
   }, []);
 
   const username =
-    session?.user?.user_metadata?.username ??
-    session?.user?.name ??
-    "user";
+  session?.user?.user_metadata?.username ??
+  session?.user?.user_metadata?.full_name ??
+  session?.user?.email?.split("@")[0] ??
+  "user";
 
   return (
     <div className="avatar-wrapper" ref={menuRef}>
