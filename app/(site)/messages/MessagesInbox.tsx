@@ -1,8 +1,19 @@
+import { PenSquare } from "lucide-react";
+
 export default function MessagesInbox() {
   return (
     <div className="messages-page">
       {/* Header */}
-      <h1 className="messages-title">Messages</h1>
+      <div className="messages-header">
+        <h1 className="messages-title">Messages</h1>
+
+        <button
+          className="messages-compose-btn"
+          title="Start a new conversation"
+        >
+          <PenSquare size={18} />
+        </button>
+      </div>
 
       {/* Search */}
       <div className="messages-search">
@@ -33,7 +44,7 @@ export default function MessagesInbox() {
   );
 }
 
-/* TEMP inline component (still okay) */
+/* TEMP inline component (unchanged) */
 function MessageItem({
   name,
   message,

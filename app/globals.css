@@ -2075,6 +2075,35 @@ html.light {
 }
 
 /* ======================================================
+   MESSAGES HEADER (TITLE + COMPOSE)
+   ====================================================== */
+
+.messages-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.messages-compose-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.messages-compose-btn:hover {
+  background: var(--glass-bg);
+}
+
+/* ======================================================
    CHAT PAGE
    ====================================================== */
 
