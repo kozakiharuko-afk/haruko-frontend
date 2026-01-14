@@ -1728,6 +1728,31 @@ html.light .notif-icon {
   color: inherit;
 }
 
+.series-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.4rem;
+}
+
+.series-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.series-cover {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.series-cover img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+}
+
 /* ===============================
    BADGES
    =============================== */
