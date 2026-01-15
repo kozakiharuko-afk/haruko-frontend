@@ -604,25 +604,25 @@ body {
 }
 
 /* ================= MENU ================= */
-
 .profile-menu {
   margin-top: 28px;
   display: flex;
-  justify-content: center;
-  gap: 8px;
+  justify-content: center;  /* Center buttons horizontally */
+  align-items: center;      /* Center buttons vertically */
+  gap: 16px;                /* Increase space between buttons */
+  flex-wrap: wrap;          /* Allow buttons to wrap if necessary */
+  margin-bottom: 20px;      /* Add space between menu and content */
 }
 
 .profile-menu button {
-  padding: 8px 16px;
+  padding: 8px 18px;  /* Adjust padding to make the buttons more balanced */
   border-radius: 999px;
   border: 1px solid var(--border);
   background: transparent;
   color: var(--text-primary);
-
+  font-size: 0.95rem; /* Reduce font size for cleaner look */
   cursor: pointer;
-  transition:
-    background-color 0.15s ease,
-    color 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .profile-menu button:hover {
@@ -638,7 +638,18 @@ body {
 .profile-menu button {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;  /* Adjust gap between icon and text */
+}
+
+/* Add responsiveness if needed */
+@media (max-width: 600px) {
+  .profile-menu {
+    justify-content: center;  /* Center on small screens */
+  }
+
+  .profile-menu button {
+    padding: 6px 12px; /* Slightly reduce button size */
+  }
 }
 
 /* ================= STATUS ================= */
@@ -873,6 +884,43 @@ body {
   font-weight: 500;
 }
 
+/* ================= PROFILE USER SEARCH ================= */
+.profile-user-search {
+  position: relative;
+  width: 100%;
+  max-width: 350px;  /* Adjust the width of the search bar */
+  margin-bottom: 20px;  /* Add space between search bar and menu */
+  padding: 10px 15px;
+  border-radius: 30px;  /* Make the search bar rounded */
+  border: 1px solid #e0e0e0;  /* Light border color */
+  background-color: #f1ece1;  /* Soft beige color, not white */
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow for depth */
+}
+
+.profile-user-search input {
+  width: 100%;
+  padding: 8px 15px 8px 40px;  /* Space for the icon on the left */
+  border: none;
+  background: transparent;
+  color: #333;  /* Dark text color for visibility */
+  font-size: 1rem;
+  border-radius: 30px;  /* Make input rounded */
+}
+
+.profile-user-search input:focus {
+  outline: none;
+}
+
+.profile-user-search .icon {
+  position: absolute;
+  left: 15px;  /* Position the magnifying glass inside the box */
+  color: #888;  /* Subtle icon color */
+  width: 18px;
+  height: 18px;
+}
+
 /* ================= PROFILE USER ACTION BUTTONS ================= */
 .profile-user-action {
   position: relative;
@@ -882,73 +930,61 @@ body {
   border-radius: 999px;
   border: 1px solid var(--border);
 
-  /* Ensure button background is theme-aware */
-  background: var(--bg-input);
-  color: var(--text);
+  background: var(--bg-input); /* Default background */
+  color: var(--text); /* Default text color */
 
   font-size: 0.8rem;
   font-weight: 500;
 
   cursor: pointer;
   transition: 
-    background-color 0.15s ease,
-    color 0.15s ease,
-    border-color 0.15s ease,
-    transform 0.15s ease;
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
 }
 
 /* Default hover (Follow / Following / Follow back) */
 .profile-user-action:hover {
-  background: var(--accent-soft);
-  color: var(--accent); /* Accent color text on hover */
+  background: var(--accent-soft); /* Soft accent color on hover */
+  color: var(--accent);  /* Accent color text on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
 }
 
-/* ⚠️ UNFOLLOW BUTTON (soft accent) */
+/* ⚠️ UNFOLLOW BUTTON (light lavender text color) */
 .profile-user-action.warn {
-  background: var(--bg-input); /* Neutral background */
-  color: var(--text); /* Text color */
+  background: var(--bg-input); /* Light background */
+  color: var(--muted);  /* Light lavender color for text */
+  border: 1px solid var(--muted); /* Border matching the text color */
 }
 
-/* Unfollow button hover effect (theme-aware) */
+/* Unfollow button hover effect */
 .profile-user-action.warn:hover {
-  background: color-mix(
-    in srgb,
-    var(--bg-input) 85%,
-    var(--danger, #ff6b6b) 15% /* Darker hover for Unfollow */
-  );
-  color: var(--danger, #ff6b6b); /* Danger color for Unfollow text */
-}
-
-/* ⛔ BLOCK BUTTON (high emphasis) */
-.profile-user-action.danger {
-  background: var(--bg-input); /* Background for dark mode */
-  color: var(--danger, #ff6b6b); /* Danger color text */
-  border-color: transparent;
-}
-
-/* Block button hover effect */
-.profile-user-action.danger:hover {
-  background: color-mix(
-    in srgb,
-    var(--bg-input) 65%,
-    var(--danger, #ff6b6b) 35% /* Darker hover for Block */
-  );
+  background: var(--muted); /* Muted background for hover */
+  color: var(--bg-input); /* Text turns to the default background color */
+  transform: scale(1.05); /* Slightly enlarge the button */
 }
 
 /* ======================================================
-   BADGE COLORS (SOFT, EYE-FRIENDLY)
+   DARK MODE AND LIGHT MODE VARIABLES
    ====================================================== */
 
 /* 🌙 Dark Mode */
 :root {
-  --badge-bg: #8b7bff;       /* soft violet */
-  --badge-text: #ffffff;
+  --danger: #ff6b6b;          /* Red for danger */
+  --danger-soft: #ffb3b3;     /* Soft red for hover */
+  
+  --badge-bg: #8b7bff;        /* soft violet for badge */
+  --badge-text: #ffffff;      /* White text on badge */
 }
 
 /* ☀️ Light Mode */
 html.light {
-  --badge-bg: #ff9c7d;       /* peachy orange */
-  --badge-text: #ffffff;
+  --danger: #ff6b6b;          /* Red for danger */
+  --danger-soft: #ffb3b3;     /* Soft red for hover */
+
+  --badge-bg: #ff9c7d;        /* Peachy orange for badge */
+  --badge-text: #ffffff;      /* White text on badge */
 }
 
 /* ======================================================

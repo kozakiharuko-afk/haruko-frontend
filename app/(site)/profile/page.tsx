@@ -34,11 +34,9 @@ export default function ProfilePage() {
 
   const [status, setStatus] = useState("");
   const [statusImage, setStatusImage] = useState<string | null>(null);
-
   const isOwner = true;
 
   // ================= MOCK DATA =================
-
   const followers = [
     { id: 1, username: "akari", name: "Akari", avatar: "https://i.pravatar.cc/80?img=1" },
     { id: 2, username: "ren", name: "Ren", avatar: "https://i.pravatar.cc/80?img=2" },
@@ -123,7 +121,12 @@ export default function ProfilePage() {
           />
         )}
 
-        {active === "followers" && <ProfileFollowers followers={followers} />}
+        {active === "followers" && (
+          <>
+            {/* No duplicate search bar */}
+            <ProfileFollowers followers={followers} />
+          </>
+        )}
         {active === "followings" && <ProfileFollowings followings={followings} />}
         {active === "friends" && <ProfileFriends />}
         {active === "requests" && <ProfileRequests />}
