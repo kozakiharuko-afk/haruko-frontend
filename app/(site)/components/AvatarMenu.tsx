@@ -21,6 +21,8 @@ export default function AvatarMenu() {
   /* ================= CLICK OUTSIDE ================= */
 
   useEffect(() => {
+    if (!open) return;
+
     const handleClickOutside = (e: MouseEvent) => {
       if (
         menuRef.current &&
@@ -33,11 +35,13 @@ export default function AvatarMenu() {
     document.addEventListener("mousedown", handleClickOutside);
     return () =>
       document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [open]);
 
   /* ================= ESC KEY CLOSE ================= */
 
   useEffect(() => {
+    if (!open) return;
+
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setOpen(false);
@@ -47,13 +51,13 @@ export default function AvatarMenu() {
     document.addEventListener("keydown", handleKey);
     return () =>
       document.removeEventListener("keydown", handleKey);
-  }, []);
+  }, [open]);
 
   const username =
-  session?.user?.user_metadata?.username ??
-  session?.user?.user_metadata?.full_name ??
-  session?.user?.email?.split("@")[0] ??
-  "user";
+    session?.user?.user_metadata?.username ??
+    session?.user?.user_metadata?.full_name ??
+    session?.user?.email?.split("@")[0] ??
+    "user";
 
   return (
     <div className="avatar-wrapper" ref={menuRef}>
@@ -76,48 +80,63 @@ export default function AvatarMenu() {
       </button>
 
       {/* Dropdown */}
-{open && (
-  <div className="avatar-dropdown" role="menu">
-    <div className="avatar-header">
-      <strong className="avatar-username">
-        @{username}
-      </strong>
-    </div>
+      {open && (
+        <div className="avatar-dropdown" role="menu">
+          <div className="avatar-header">
+            <strong className="avatar-username">
+              @{username}
+            </strong>
+          </div>
 
-    <div className="avatar-actions">
-      <Link href="/profile" className="avatar-item">
-        <span className="avatar-item-icon">
-          <User size={16} />
-        </span>
-        <span className="avatar-item-label">Profile</span>
-        <ChevronRight className="avatar-item-chevron" size={16} />
-      </Link>
+          <div className="avatar-actions">
+            <Link
+              href="/profile"
+              className="avatar-item"
+              onClick={() => setOpen(false)}
+            >
+              <span className="avatar-item-icon">
+                <User size={16} />
+              </span>
+              <span className="avatar-item-label">Profile</span>
+              <ChevronRight className="avatar-item-chevron" size={16} />
+            </Link>
 
-      <Link href="/timeline" className="avatar-item">
-        <span className="avatar-item-icon">
-          <Clock size={16} />
-        </span>
-        <span className="avatar-item-label">Timeline</span>
-        <ChevronRight className="avatar-item-chevron" size={16} />
-      </Link>
+            <Link
+              href="/timeline"
+              className="avatar-item"
+              onClick={() => setOpen(false)}
+            >
+              <span className="avatar-item-icon">
+                <Clock size={16} />
+              </span>
+              <span className="avatar-item-label">Timeline</span>
+              <ChevronRight className="avatar-item-chevron" size={16} />
+            </Link>
 
-      <Link href="/library" className="avatar-item">
-        <span className="avatar-item-icon">
-          <Library size={16} />
-        </span>
-        <span className="avatar-item-label">Library</span>
-        <ChevronRight className="avatar-item-chevron" size={16} />
-      </Link>
+            <Link
+              href="/library"
+              className="avatar-item"
+              onClick={() => setOpen(false)}
+            >
+              <span className="avatar-item-icon">
+                <Library size={16} />
+              </span>
+              <span className="avatar-item-label">Library</span>
+              <ChevronRight className="avatar-item-chevron" size={16} />
+            </Link>
 
-      <button className="avatar-item danger">
-        <span className="avatar-item-icon">
-          <LogOut size={16} />
-        </span>
-        <span className="avatar-item-label">Log out</span>
-      </button>
-    </div>
-  </div>
-)}
+            <button
+              className="avatar-item danger"
+              onClick={() => setOpen(false)}
+            >
+              <span className="avatar-item-icon">
+                <LogOut size={16} />
+              </span>
+              <span className="avatar-item-label">Log out</span>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

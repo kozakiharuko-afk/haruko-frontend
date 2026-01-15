@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { useNotifications } from "@/app/(site)/notifications/NotificationsContext";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Bell, BookOpen, Book } from "lucide-react";
 
 export default function NotificationBell() {
   const [showNotifications, setShowNotifications] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
+
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const {
     notifications,
@@ -17,6 +19,26 @@ export default function NotificationBell() {
     clearAll,
   } = useNotifications();
 
+  /* ================= CLICK OUTSIDE ================= */
+
+  useEffect(() => {
+    if (!showNotifications) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target as Node)
+      ) {
+        setShowNotifications(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showNotifications]);
+
   /* ================= GROUPS ================= */
 
   const todayNotifications = notifications.filter(n => n.group === "today");
@@ -25,7 +47,7 @@ export default function NotificationBell() {
   /* ================= RENDER ================= */
 
   return (
-    <div className="dropdown-wrapper">
+    <div className="dropdown-wrapper" ref={wrapperRef}>
       <button
         className={`icon-btn badge ${unreadCount === 0 ? "read" : ""}`}
         onClick={() => {
@@ -64,8 +86,9 @@ export default function NotificationBell() {
                     )}
                   </div>
 
-                  <div className="notif-content">
-                    <p>
+                  {/* ✅ FIXED CONTENT STRUCTURE */}
+                  <div className="notif-body">
+                    <p className="notif-title">
                       <strong>{n.title}</strong>
                       {n.extra > 0 && ` and ${n.extra} other`} updated
                     </p>
@@ -95,8 +118,11 @@ export default function NotificationBell() {
                     )}
                   </div>
 
-                  <div className="notif-content">
-                    <p><strong>{n.title}</strong> updated</p>
+                  {/* ✅ SAME STRUCTURE */}
+                  <div className="notif-body">
+                    <p className="notif-title">
+                      <strong>{n.title}</strong> updated
+                    </p>
                     <span className="notif-time">{n.time}</span>
                   </div>
                 </li>
