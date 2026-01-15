@@ -519,6 +519,16 @@ body {
 /* ================= HEADER ================= */
 
 .profile-header {
+  padding: 24px 20px;
+  border-radius: 22px;
+
+  background: transparent;
+  border: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: blur(16px);
+
+  border: 1px solid var(--glass-border);
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -634,34 +644,16 @@ body {
 /* ================= STATUS ================= */
 
 .profile-status {
+  width: 100%;
   padding: 10px 12px;
   border-radius: 10px;
-  cursor: default;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-}
 
-.profile-status.editable {
-  cursor: text;
-}
-
-.profile-status.editable:hover {
-  background: var(--accent-soft);
-}
-
-.profile-status-input {
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text-primary);
-  outline: none;
-  resize: none;
-  min-height: 80px;
+  cursor: default;
 }
 
 /* ================= STATUS EDIT ICON ================= */
@@ -674,16 +666,11 @@ body {
 
   color: var(--muted);
   cursor: pointer;
-  opacity: 0;
+  opacity: 1;
 
   transition:
-    opacity 0.15s ease,
     background-color 0.15s ease,
     color 0.15s ease;
-}
-
-.profile-status.editable:hover .profile-status-edit {
-  opacity: 1;
 }
 
 .profile-status-edit:hover {
@@ -691,37 +678,98 @@ body {
   color: var(--accent);
 }
 
-/* ================= STATUS EXTENDED ================= */
+/* ================= BIO STATUS (WITH IMAGE) ================= */
 
-.status-editor {
+.profile-status-content {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  flex: 1;
 }
 
-.status-toolbar {
+.profile-status-text {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.profile-status-image {
+  max-width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+/* ================= EDITOR ================= */
+
+.profile-status-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-status-input {
+  width: 100%;
+  min-height: 80px;
+  resize: none;
+
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.9rem;
+
+  outline: none;
+}
+
+/* ================= IMAGE PREVIEW ================= */
+
+.status-image-preview {
+  position: relative;
+  max-width: 100%;
+}
+
+.status-image-preview img {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.remove-image {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--muted);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.remove-image:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+
+/* ================= ACTIONS ================= */
+
+.profile-status-actions {
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.status-toolbar .icon-btn {
-  width: 32px;
-  height: 32px;
-}
-
-.status-visibility {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-
-.status-visibility select {
-  background: transparent;
-  border: none;
-  color: var(--text-primary);
 }
 
 .status-save {
@@ -729,21 +777,20 @@ body {
   padding: 6px 12px;
   border-radius: 8px;
   border: none;
+
   background: var(--accent-soft);
   color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 500;
   cursor: pointer;
 }
 
-.status-attachment {
-  margin-top: 6px;
-  font-size: 0.85rem;
+.status-cancel {
+  background: none;
+  border: none;
   color: var(--muted);
-}
-
-.status-timestamp {
-  margin-top: 6px;
-  font-size: 0.75rem;
-  color: var(--muted);
+  font-size: 0.8rem;
+  cursor: pointer;
 }
 
 /* ================= PROFILE BADGE COUNT ================= */
@@ -826,8 +873,7 @@ body {
   font-weight: 500;
 }
 
-/* ================= ACTION BUTTONS ================= */
-
+/* ================= PROFILE USER ACTION BUTTONS ================= */
 .profile-user-action {
   position: relative;
   z-index: 1;
@@ -836,79 +882,57 @@ body {
   border-radius: 999px;
   border: 1px solid var(--border);
 
-  background: var(--accent-soft);
-  color: var(--accent);
+  /* Ensure button background is theme-aware */
+  background: var(--bg-input);
+  color: var(--text);
 
   font-size: 0.8rem;
   font-weight: 500;
 
   cursor: pointer;
-  transition:
+  transition: 
     background-color 0.15s ease,
     color 0.15s ease,
-    border-color 0.15s ease;
-}
-
-/* Follow / Follow back hover */
-.profile-user-action:not(.danger):hover {
-  background: var(--accent);
-  color: var(--bg);
-}
-
-/* Destructive action (Unfollow, Remove, Block) */
-.profile-user-action.danger {
-  background: color-mix(
-    in srgb,
-    var(--danger, #ff6b6b) 14%,
-    transparent
-  );
-  color: var(--danger, #ff6b6b);
-  border-color: transparent;
-}
-
-.profile-user-action.danger:hover {
-  background: color-mix(
-    in srgb,
-    var(--danger, #ff6b6b) 22%,
-    transparent
-  );
-}
-
-/* Arrow indicator */
-.profile-user-row::after {
-  content: "→";
-  position: absolute;
-  right: 72px;
-
-  font-size: 1rem;
-  font-weight: 500;
-
-  color: var(--muted);
-  opacity: 0;
-
-  transform: translateX(-4px);
-  transition:
-    opacity 0.15s ease,
+    border-color 0.15s ease,
     transform 0.15s ease;
 }
 
-.profile-user-row:hover::after {
-  opacity: 1;
-  transform: translateX(0);
+/* Default hover (Follow / Following / Follow back) */
+.profile-user-action:hover {
+  background: var(--accent-soft);
+  color: var(--accent); /* Accent color text on hover */
 }
 
-/* ================= CONTENT ================= */
-
-.profile-content {
-  margin-top: 24px;
+/* ⚠️ UNFOLLOW BUTTON (soft accent) */
+.profile-user-action.warn {
+  background: var(--bg-input); /* Neutral background */
+  color: var(--text); /* Text color */
 }
 
-.profile-panel {
-  padding: 24px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  text-align: center;
+/* Unfollow button hover effect (theme-aware) */
+.profile-user-action.warn:hover {
+  background: color-mix(
+    in srgb,
+    var(--bg-input) 85%,
+    var(--danger, #ff6b6b) 15% /* Darker hover for Unfollow */
+  );
+  color: var(--danger, #ff6b6b); /* Danger color for Unfollow text */
+}
+
+/* ⛔ BLOCK BUTTON (high emphasis) */
+.profile-user-action.danger {
+  background: var(--bg-input); /* Background for dark mode */
+  color: var(--danger, #ff6b6b); /* Danger color text */
+  border-color: transparent;
+}
+
+/* Block button hover effect */
+.profile-user-action.danger:hover {
+  background: color-mix(
+    in srgb,
+    var(--bg-input) 65%,
+    var(--danger, #ff6b6b) 35% /* Darker hover for Block */
+  );
 }
 
 /* ======================================================
