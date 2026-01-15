@@ -43,10 +43,12 @@ export default function SiteHeader() {
 
         {/* ================= LEFT ================= */}
         <div className="header-left">
-          <Link href="/" className="logo">
+          {/* LOGO → HOME */}
+          <Link href="/" className="logo" aria-label="Go to homepage">
             <img src="/logo/haruko-logo.png" alt="Haruko" />
           </Link>
 
+          {/* SEARCH */}
           <SearchBox />
         </div>
 
@@ -55,6 +57,7 @@ export default function SiteHeader() {
 
           {/* Theme toggle */}
           <button
+            type="button"
             className={`theme-toggle ${theme}`}
             onClick={toggleTheme}
             aria-label="Toggle theme"
@@ -64,24 +67,24 @@ export default function SiteHeader() {
             </span>
           </button>
 
-          {/* Messages (CLICKABLE → /messages) */}
+          {/* Messages → /messages */}
           <Link
-  href="/messages"
-  className="icon-btn badge"
-  aria-label="Messages"
->
-  <MessageCircle size={18} />
-  {unreadCount > 0 && (
-    <span className="badge-count">
-      {unreadCount}
-    </span>
-  )}
-</Link>
+            href="/messages"
+            className="icon-btn badge"
+            aria-label="Messages"
+          >
+            <MessageCircle size={18} />
+            {unreadCount > 0 && (
+              <span className="badge-count">
+                {unreadCount}
+              </span>
+            )}
+          </Link>
 
           {/* Notifications */}
           <NotificationBell />
 
-          {/* Avatar */}
+          {/* Avatar menu */}
           <AvatarMenu />
 
         </div>
