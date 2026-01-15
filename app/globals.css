@@ -5,21 +5,25 @@
 /* 🌙 DARK MODE (DEFAULT) — Dark Violet */
 :root {
   /* Backgrounds */
-  --bg: #0e0b14;              /* deep violet-black */
-  --bg-input: #1a1430;       /* input panels */
+  --bg: #0e0b14;
+  --bg-input: #1a1430;
 
   /* Text */
-  --text: #f4f1fa;           /* near-white */
-  --muted: #a59fc2;          /* soft lavender */
-  --border: #2b2142;         /* subtle violet border */
+  --text: #f4f1fa;
+  --muted: #a59fc2;
+  --border: #2b2142;
 
-  /* Accent (DARK VIOLET 💜) */
-  --accent: #7c5cff;         /* main violet */
-  --accent-soft: #2f2550;    /* hover / soft panels */
+  /* Accent */
+  --accent: #7c5cff;
+  --accent-soft: #2f2550;
 
   /* Glass */
   --glass-bg: rgba(255, 255, 255, 0.06);
   --glass-border: rgba(255, 255, 255, 0.12);
+
+  /* Badge (dark = lavender) */
+  --badge-bg: #8b7bff;
+  --badge-text: #ffffff;
 }
 
 /* ☀️ LIGHT MODE */
@@ -36,8 +40,13 @@ html.light {
 
   --glass-bg: rgba(255, 255, 255, 0.75);
   --glass-border: rgba(255, 255, 255, 0.45);
+
+  /* Badge (light = peach) */
+  --badge-bg: #ff9c7d;
+  --badge-text: #ffffff;
 }
 
+/* Light-mode hover tweak */
 html.light .message-item:hover {
   background: rgba(0, 0, 0, 0.04);
 }
@@ -538,11 +547,10 @@ body {
 
 /* Avatar */
 .profile-avatar {
-  width: 110px;
-  height: 110px;
-  border-radius: 999px;
+  width: 180px;  /* Increased size */
+  height: 180px; /* Increased size */
+  border-radius: 999px; /* Keep it round */
   overflow: hidden;
-
   background: var(--accent-soft);
   display: flex;
   align-items: center;
@@ -552,7 +560,7 @@ body {
 .profile-avatar img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Ensure the image fits properly */
 }
 
 /* Identity */
@@ -818,21 +826,59 @@ body {
   color: var(--accent);
 }
 
-/* ================= PROFILE USER LIST ================= */
+/* ================= PROFILE SEARCH (SHARED) ================= */
 
-.profile-user-search {
+.profile-search {
+  position: relative;
   width: 100%;
-  margin-bottom: 12px;
-  padding: 8px 12px;
+  max-width: 260px;
+  margin: 0 auto 14px;
+  padding: 6px 12px;
 
-  border-radius: 10px;
+  border-radius: 999px;
   border: 1px solid var(--border);
-  background: var(--bg);
+  background: var(--bg-input);
 
-  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.profile-search input {
+  width: 100%;
+  padding-left: 26px;
+
+  border: none;
+  background: transparent;
+  color: var(--text);
+
+  font-size: 0.85rem;
+}
+
+.profile-search input::placeholder {
+  color: var(--muted);
+}
+
+.profile-search input:focus {
   outline: none;
 }
 
+.profile-search .icon {
+  position: absolute;
+  left: 12px;
+  width: 14px;
+  height: 14px;
+  color: var(--muted);
+}
+
+.profile-search:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+/* ================= PROFILE USER LIST ================= */
 .profile-user-list {
   display: flex;
   flex-direction: column;
@@ -841,17 +887,13 @@ body {
 
 .profile-user-row {
   position: relative;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: 10px 12px;
   border-radius: 12px;
-
   border: 1px solid var(--border);
   background: var(--bg);
-
   transition: background-color 0.15s ease;
 }
 
@@ -863,7 +905,6 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-
   text-decoration: none;
   color: inherit;
 }
@@ -884,107 +925,98 @@ body {
   font-weight: 500;
 }
 
-/* ================= PROFILE USER SEARCH ================= */
-.profile-user-search {
-  position: relative;
-  width: 100%;
-  max-width: 350px;  /* Adjust the width of the search bar */
-  margin-bottom: 20px;  /* Add space between search bar and menu */
-  padding: 10px 15px;
-  border-radius: 30px;  /* Make the search bar rounded */
-  border: 1px solid #e0e0e0;  /* Light border color */
-  background-color: #f1ece1;  /* Soft beige color, not white */
-  display: flex;
-  align-items: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow for depth */
-}
-
-.profile-user-search input {
-  width: 100%;
-  padding: 8px 15px 8px 40px;  /* Space for the icon on the left */
-  border: none;
-  background: transparent;
-  color: #333;  /* Dark text color for visibility */
-  font-size: 1rem;
-  border-radius: 30px;  /* Make input rounded */
-}
-
-.profile-user-search input:focus {
-  outline: none;
-}
-
-.profile-user-search .icon {
-  position: absolute;
-  left: 15px;  /* Position the magnifying glass inside the box */
-  color: #888;  /* Subtle icon color */
-  width: 18px;
-  height: 18px;
-}
-
 /* ================= PROFILE USER ACTION BUTTONS ================= */
 .profile-user-action {
   position: relative;
   z-index: 1;
-
   padding: 6px 12px;
   border-radius: 999px;
   border: 1px solid var(--border);
-
-  background: var(--bg-input); /* Default background */
-  color: var(--text); /* Default text color */
-
+  background: var(--bg-input);
+  color: var(--text);
   font-size: 0.8rem;
   font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.25s, color 0.25s, border-color 0.25s, transform 0.25s;
+}
+
+.profile-user-action:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+  transform: scale(1.05);
+}
+
+.profile-user-action.warn {
+  background: var(--bg-input);
+  color: var(--muted);
+  border: 1px solid var(--muted);
+}
+
+.profile-user-action.warn:hover {
+  background: var(--muted);
+  color: var(--bg-input);
+  transform: scale(1.05);
+}
+
+/* ================= FRIENDS LIST ACTIONS ================= */
+
+.profile-user-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-user-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: var(--muted);
 
   cursor: pointer;
-  transition: 
-    background-color 0.25s ease,
-    color 0.25s ease,
-    border-color 0.25s ease,
-    transform 0.25s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
-/* Default hover (Follow / Following / Follow back) */
-.profile-user-action:hover {
-  background: var(--accent-soft); /* Soft accent color on hover */
-  color: var(--accent);  /* Accent color text on hover */
-  transform: scale(1.05); /* Slightly enlarge the button */
+.profile-user-icon:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+  transform: scale(1.08);
 }
 
-/* ⚠️ UNFOLLOW BUTTON (light lavender text color) */
-.profile-user-action.warn {
-  background: var(--bg-input); /* Light background */
-  color: var(--muted);  /* Light lavender color for text */
-  border: 1px solid var(--muted); /* Border matching the text color */
+/* Block button (lock) */
+.profile-user-icon.danger:hover {
+  background: var(--danger-soft);
+  color: var(--danger);
 }
 
-/* Unfollow button hover effect */
-.profile-user-action.warn:hover {
-  background: var(--muted); /* Muted background for hover */
-  color: var(--bg-input); /* Text turns to the default background color */
-  transform: scale(1.05); /* Slightly enlarge the button */
+/* ================= FRIEND ROW EXIT ANIMATION ================= */
+
+.profile-user-row {
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease,
+    height 0.18s ease,
+    margin 0.18s ease,
+    padding 0.18s ease;
 }
 
-/* ======================================================
-   DARK MODE AND LIGHT MODE VARIABLES
-   ====================================================== */
-
-/* 🌙 Dark Mode */
-:root {
-  --danger: #ff6b6b;          /* Red for danger */
-  --danger-soft: #ffb3b3;     /* Soft red for hover */
-  
-  --badge-bg: #8b7bff;        /* soft violet for badge */
-  --badge-text: #ffffff;      /* White text on badge */
-}
-
-/* ☀️ Light Mode */
-html.light {
-  --danger: #ff6b6b;          /* Red for danger */
-  --danger-soft: #ffb3b3;     /* Soft red for hover */
-
-  --badge-bg: #ff9c7d;        /* Peachy orange for badge */
-  --badge-text: #ffffff;      /* White text on badge */
+.profile-user-row.removing {
+  opacity: 0;
+  transform: translateX(-6px);
+  height: 0;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0;
 }
 
 /* ======================================================

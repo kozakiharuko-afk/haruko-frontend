@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
+import { Search } from "lucide-react";
 
 type User = {
   id: number;
@@ -22,12 +23,14 @@ export default function ProfileFollowings({
   return (
     <div className="profile-panel">
       {/* SEARCH */}
-      <input
-        className="profile-user-search"
-        placeholder="Search followings..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
+      <div className="profile-search">
+        <Search className="icon" size={14} />
+        <input
+          placeholder="Search followings..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </div>
 
       {/* LIST */}
       <div className="profile-user-list">
