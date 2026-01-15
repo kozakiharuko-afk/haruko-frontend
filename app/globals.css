@@ -1439,6 +1439,7 @@ html.light .notif-icon {
 }
 
 .notif-content {
+  grid-column: 2;
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
@@ -1449,11 +1450,6 @@ html.light .notif-icon {
 
 .notif-content p {
   margin: 0;
-}
-
-.notif-time {
-  font-size: 0.7rem;
-  color: var(--muted);
 }
 
 .notif-dot {
@@ -1552,20 +1548,50 @@ html.light .notif-icon {
    ====================================================== */
 
 .notifications-page {
-  max-width: 680px;
+  max-width: 1100px;
+  margin: 0 auto; 
   padding: 24px;
 
-  /* ⬇️ ADDED: page controls vertical layout */
   min-height: calc(100vh - var(--header-height, 72px));
   display: flex;
   flex-direction: column;
 }
 
 .notifications-title {
+  grid-column: 2;
   font-size: 1.25rem;
   font-weight: 600;
+}
+
+/* ======================================================
+   NOTIFICATIONS HEADER
+   ====================================================== */
+
+.notifications-header {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
   margin-bottom: 16px;
 }
+
+.notifications-clear {
+  grid-column: 3;
+  justify-self: end;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.notifications-clear:hover {
+  text-decoration: underline;
+}
+
+/* ======================================================
+   NOTIFICATIONS LIST
+   ====================================================== */
 
 .notifications-list {
   display: flex;
@@ -1582,67 +1608,9 @@ html.light .notif-icon {
   text-transform: uppercase;
 }
 
-/* ⬇️ FIXED: single, correct empty state */
-.notifications-empty {
-  flex: 1;                     /* fills remaining space */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 0.95rem;
-  color: rgba(0, 0, 0, 0.55); /* grayish-black */
-  text-align: center;
-}
-
-/* ======================================================
-   NOTIFICATIONS HEADER
-   ====================================================== */
-
-.notifications-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.notifications-clear {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--accent);
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.notifications-clear:hover {
-  text-decoration: underline;
-}
-
-/* ======================================================
-   NOTIFICATION ITEM LAYOUT
-   ====================================================== */
-
-.notif-content {
-  flex: 1;
-}
-
-.notif-top {
-  display: grid;
-  grid-template-columns: 1fr auto; /* LEFT grows, RIGHT is fixed */
-  align-items: center;
-  gap: 12px;
-}
-
-.notif-title {
-  font-size: 0.9rem;
-  line-height: 1.3;
-}
-
-.notif-time {
-  font-size: 0.75rem;
-  color: var(--muted);
-  white-space: nowrap;
-  text-align: right;
+.notif-avatar-spacer {
+  width: 44px; /* EXACT match to avatar column */
+  height: 1px;
 }
 
 /* ======================================================
@@ -1652,6 +1620,51 @@ html.light .notif-icon {
 .notification-block {
   padding: 12px 0;
   border-bottom: 1px solid var(--glass-border);
+}
+
+/* ======================================================
+   NOTIFICATION ITEM LAYOUT (MAIN FIX)
+   ====================================================== */
+
+.notification-item {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.notif-content {
+  grid-column: 2;
+}
+
+.notif-title {
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.notif-time {
+  grid-column: 3;
+  justify-self: end;
+  align-self: center;
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ======================================================
+   EMPTY STATE
+   ====================================================== */
+
+.notifications-empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.55);
+  text-align: center;
 }
 
 /* ======================================================
