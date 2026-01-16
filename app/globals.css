@@ -3549,6 +3549,114 @@ html:not(.light) .request-action.decline:hover {
   margin-top: 4px;
 }
 
+.profile-locked {
+  padding: 32px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-locked-message {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 0.9rem;
+  text-align: center;
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+/* ================= OTHER USER PAGE ADD/FOLLOW/BLOCK MENU ================= */
+
+.profile-actions-inline {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.capsule {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: transparent;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.capsule:hover {
+  transform: translateY(-1px);
+}
+
+.capsule.primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}
+
+.capsule.primary:hover {
+  opacity: 0.9;
+}
+
+.capsule.secondary {
+  border-color: var(--border);
+  color: var(--text);
+  background: var(--bg-input);
+}
+
+.capsule.secondary:hover {
+  background: var(--accent-soft);
+}
+
+.capsule.danger {
+  border-color: var(--border);
+  color: var(--muted);
+}
+
+.capsule.danger:hover {
+  color: #d14;
+  border-color: #d14;
+  background: rgba(209, 20, 20, 0.08);
+}
+
+.private-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.menu-lock {
+  margin-left: 6px;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.capsule.message {
+  padding: 8px;
+  background: transparent;
+  color: var(--btn-ghost-text);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.capsule.message:hover {
+  background: var(--btn-ghost-hover-bg);
+}
+
+
 /* ======================================================
    MUTED
    ====================================================== */

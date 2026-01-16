@@ -135,8 +135,8 @@ export default function ProfilePage() {
   )}
 
   {active === "friends" && (
-    <ProfileFriends />
-  )}
+  <ProfileFriends friends={friends} />
+)}
 
   {active === "requests" && (
     <ProfileRequests
