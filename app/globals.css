@@ -3227,37 +3227,131 @@ html:not(.light) .chat-send-btn {
 }
 
 /* ======================================================
-   CONFIRM MODAL
+   CONFIRM MODAL — FINAL
    ====================================================== */
 
-.confirm-overlay {
+.modal-backdrop {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.35);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
+  z-index: 9999;
 }
 
-.confirm-box {
+.modal {
+  width: 90%;
+  max-width: 360px;
+  padding: 20px;
   background: var(--bg);
-  padding: 16px;
-  border-radius: 14px;
-  width: 300px;
-  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 24px 50px rgba(0,0,0,0.3);
 }
 
-.confirm-actions {
+/* Title */
+.modal h3 {
+  margin-bottom: 6px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Description */
+.modal p {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* Actions */
+.modal-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
-  margin-top: 12px;
+  gap: 10px;
+  margin-top: 18px;
 }
 
-.confirm-actions .danger {
-  color: white;
-  background: #ef4444;
+/* Cancel */
+.modal-cancel {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--btn-ghost-text);
+  border: 1px solid transparent;
+  font-size: 0.8rem;
+}
+
+.modal-cancel:hover {
+  background: var(--btn-ghost-hover-bg);
+}
+
+/* Confirm (shared) */
+.modal-confirm {
+  padding: 7px 18px;
+  border-radius: 999px;
+  background: var(--btn-primary-bg);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.modal-confirm:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+}
+
+/* Destructive */
+.modal-confirm.danger {
+  background: var(--btn-danger-bg);
+}
+
+/* Animation */
+@keyframes modal-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+:root {
+  /* === BUTTON TOKENS === */
+
+  /* Primary */
+  --btn-primary-bg: var(--accent);
+  --btn-primary-text: #ffffff;
+
+  /* Danger → SAME AS ACCENT IN DARK MODE */
+  --btn-danger-bg: var(--accent);
+  --btn-danger-text: #ffffff;
+
+  /* Ghost / Cancel */
+  --btn-ghost-text: var(--muted);
+  --btn-ghost-hover-bg: var(--accent-soft);
+}
+
+html.light {
+  /* === BUTTON TOKENS === */
+
+  /* Primary */
+  --btn-primary-bg: var(--accent);
+  --btn-primary-text: var(--text);
+
+  /* Danger (darker for contrast) */
+  --btn-danger-bg: #ff8a5b;
+  --btn-danger-text: #ffffff;
+
+  /* Ghost / Cancel */
+  --btn-ghost-text: var(--muted);
+  --btn-ghost-hover-bg: var(--accent-soft);
 }
 
 /* ======================================================
