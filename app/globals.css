@@ -3418,6 +3418,18 @@ html:not(.light) .request-action.decline:hover {
   animation: spin 0.8s linear infinite;
 }
 
+/* Warn action (used for Unblock) */
+.request-action.warn {
+  background: var(--bg-input);
+  color: var(--muted);
+}
+
+.request-action.warn:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
