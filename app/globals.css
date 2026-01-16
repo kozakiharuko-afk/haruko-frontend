@@ -3354,6 +3354,76 @@ html.light {
   --btn-ghost-hover-bg: var(--accent-soft);
 }
 
+/* ================= FRIEND REQUEST ACTIONS ================= */
+
+.request-action {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease,
+    color 0.15s ease;
+}
+
+/* Accept */
+.request-action.accept {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.request-action.accept:hover {
+  transform: translateY(-1px);
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Decline (neutral, NOT danger) */
+.request-action.decline {
+  color: var(--muted);
+}
+
+.request-action.decline:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--text);
+}
+
+/* Dark mode tweak for decline hover */
+html:not(.light) .request-action.decline:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Row exit animation */
+.profile-user-row.removing {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ======================================================
    MUTED
    ====================================================== */

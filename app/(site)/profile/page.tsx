@@ -52,10 +52,10 @@ export default function ProfilePage() {
     { id: 6, username: "yuki", name: "Yuki", avatar: "https://i.pravatar.cc/80?img=6" },
   ];
 
-  const requests = [
-    { id: 7, username: "emi", name: "Emi", avatar: "https://i.pravatar.cc/80?img=7" },
-    { id: 8, username: "leo", name: "Leo", avatar: "https://i.pravatar.cc/80?img=8" },
-  ];
+  const [requests, setRequests] = useState([
+  { id: 7, username: "emi", name: "Emi", avatar: "..." },
+  { id: 8, username: "leo", name: "Leo", avatar: "..." },
+]);
 
   const blocked = [
     { id: 9, username: "taro", name: "Taro", avatar: "https://i.pravatar.cc/80?img=9" },
@@ -94,10 +94,15 @@ export default function ProfilePage() {
           <span className="profile-badge-count">{friends.length}</span>
         </button>
 
-        <button className={active === "requests" ? "active" : ""} onClick={() => setActive("requests")}>
-          <Clock size={18} /> Friend Requests
-          <span className="profile-badge-count">{requests.length}</span>
-        </button>
+        <button
+  className={active === "requests" ? "active" : ""}
+  onClick={() => setActive("requests")}
+>
+  <Clock size={18} /> Friend Requests
+  <span className="profile-badge-count">
+    {requests.length}
+  </span>
+</button>
 
         <button className={active === "blocked" ? "active" : ""} onClick={() => setActive("blocked")}>
           <UserX size={18} /> Blocked Users
@@ -110,29 +115,44 @@ export default function ProfilePage() {
       </div>
 
       {/* ================= CONTENT ================= */}
-      <div className="profile-content">
-        {active === "status" && (
-          <ProfileStatus
-            status={status}
-            setStatus={setStatus}
-            statusImage={statusImage}
-            setStatusImage={setStatusImage}
-            isOwner={isOwner}
-          />
-        )}
+<div className="profile-content">
+  {active === "status" && (
+    <ProfileStatus
+      status={status}
+      setStatus={setStatus}
+      statusImage={statusImage}
+      setStatusImage={setStatusImage}
+      isOwner={isOwner}
+    />
+  )}
 
-        {active === "followers" && (
-          <>
-            {/* No duplicate search bar */}
-            <ProfileFollowers followers={followers} />
-          </>
-        )}
-        {active === "followings" && <ProfileFollowings followings={followings} />}
-        {active === "friends" && <ProfileFriends />}
-        {active === "requests" && <ProfileRequests />}
-        {active === "blocked" && <ProfileBlocked />}
-        {active === "privacy" && <ProfilePrivacy />}
-      </div>
+  {active === "followers" && (
+    <ProfileFollowers followers={followers} />
+  )}
+
+  {active === "followings" && (
+    <ProfileFollowings followings={followings} />
+  )}
+
+  {active === "friends" && (
+    <ProfileFriends />
+  )}
+
+  {active === "requests" && (
+    <ProfileRequests
+      requests={requests}
+      setRequests={setRequests}
+    />
+  )}
+
+  {active === "blocked" && (
+    <ProfileBlocked />
+  )}
+
+  {active === "privacy" && (
+    <ProfilePrivacy />
+  )}
+</div>
     </div>
   );
 }
