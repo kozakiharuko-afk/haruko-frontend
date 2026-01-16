@@ -3436,6 +3436,119 @@ html:not(.light) .request-action.decline:hover {
   }
 }
 
+/* ================= PROFILE PRIVACY ================= */
+
+.profile-privacy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.privacy-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* ===== ROW ===== */
+
+.privacy-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 16px;
+  border-radius: 18px;
+
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.privacy-row:hover:not(.locked):not(.static) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.14);
+}
+
+.privacy-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 70%;
+}
+
+.privacy-icon {
+  color: var(--muted);
+}
+
+.privacy-icon.accent {
+  color: var(--accent);
+}
+
+.privacy-row p {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.privacy-row .muted {
+  font-size: 0.75rem;
+}
+
+/* ===== SEGMENTED PILL ===== */
+
+.privacy-pill {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+
+  background: var(--bg-input);
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+
+.privacy-pill button {
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  border-radius: 999px;
+
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.privacy-pill button.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* ===== STATES ===== */
+
+.privacy-row.locked {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.privacy-row.static {
+  opacity: 0.9;
+}
+
+/* ===== FOOTER ===== */
+
+.privacy-saved {
+  font-size: 0.7rem;
+  text-align: right;
+  margin-top: 4px;
+}
+
 /* ======================================================
    MUTED
    ====================================================== */
