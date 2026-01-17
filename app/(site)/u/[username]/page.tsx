@@ -113,10 +113,11 @@ const privacy = {
       <div className="profile-content">
         {active === "status" && (
           <ProfileStatus
-            status="Hello! This is my status 👋"
-            statusImage={null}
-            isOwner={isOwner}
-          />
+  status="Hello! This is my status 👋"
+  statusImage={null}
+  isOwner={isOwner}
+  setStatus={(v: string) => {}}   // 👈 EXACT MATCH
+/>
         )}
 
         {active === "followers" && (
