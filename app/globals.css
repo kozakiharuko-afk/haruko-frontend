@@ -3882,6 +3882,558 @@ html:not(.light) .messages-filter button {
 }
 
 /* ======================================================
+   TIMELINE PAGE
+   ====================================================== */
+
+.timeline-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px 16px 48px;
+}
+
+/* ======================================================
+   TIMELINE COMPOSER
+   ====================================================== */
+
+.timeline-composer-wrap {
+  position: sticky;
+  top: 64px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.timeline-composer {
+  padding: 12px;
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--accent) 8%, transparent),
+      transparent
+    ),
+    var(--glass-bg);
+
+  border: 1px solid color-mix(
+    in oklab,
+    var(--accent) 70%,
+    var(--glass-border)
+  );
+
+  backdrop-filter: blur(14px);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.timeline-composer:focus-within {
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--accent) 40%, transparent),
+    0 10px 34px color-mix(in oklab, var(--accent) 20%, transparent);
+}
+
+.timeline-composer textarea {
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+
+  background: transparent;
+  color: var(--text);
+
+  font-size: 0.95rem;
+  line-height: 1.4;
+
+  min-height: 44px;
+  max-height: 160px;
+}
+
+.timeline-composer textarea::placeholder {
+  color: var(--muted);
+}
+
+.timeline-composer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.timeline-composer-left {
+  display: flex;
+  gap: 6px;
+}
+
+.timeline-composer-left button,
+.timeline-post-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  color: var(--muted);
+}
+
+.timeline-composer-left button:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.timeline-post-btn {
+  color: var(--accent);
+}
+
+.timeline-post-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ======================================================
+   IMAGE PREVIEW (COMPOSER)
+   ====================================================== */
+
+.timeline-image-preview {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.timeline-image-wrapper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-input);
+}
+
+.timeline-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.timeline-image-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+
+  background: rgba(0, 0, 0, 0.55);
+  border: none;
+  border-radius: 999px;
+  padding: 4px;
+
+  color: #fff;
+  cursor: pointer;
+}
+
+.timeline-image-remove:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+/* ======================================================
+   TIMELINE FEED & POST CARD
+   ====================================================== */
+
+.timeline-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.timeline-item {
+  padding: 14px 16px;
+  border-radius: 16px;
+
+  background: color-mix(
+    in oklab,
+    var(--bg) 94%,
+    var(--accent-soft)
+  );
+
+  border: 1px solid color-mix(
+    in oklab,
+    var(--border) 70%,
+    transparent
+  );
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.timeline-item:hover {
+  border-color: var(--accent);
+  box-shadow:
+    0 12px 34px color-mix(in oklab, var(--accent) 18%, transparent);
+}
+
+/* ======================================================
+   POST HEADER / BODY
+   ====================================================== */
+
+.timeline-item-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.timeline-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.timeline-item-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-username {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.timeline-item-text {
+  margin-top: 4px;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+/* ======================================================
+   MEDIA PREVIEW (POST)
+   ====================================================== */
+
+.timeline-preview {
+  margin-top: 8px;
+  width: 100%;
+}
+
+.timeline-preview-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+}
+
+.timeline-preview-title {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+/* ======================================================
+   ACTION ICONS
+   ====================================================== */
+
+.timeline-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 14px;
+  color: var(--muted);
+}
+
+.timeline-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 4px;
+  border-radius: 999px;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+
+  transition:
+    background 0.12s ease,
+    color 0.12s ease,
+    transform 0.08s ease;
+}
+
+.timeline-actions button:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.timeline-actions button:active {
+  transform: scale(0.94);
+}
+
+/* ======================================================
+   DIVIDER
+   ====================================================== */
+
+.timeline-divider {
+  margin: 12px 0 10px;
+  height: 1px;
+
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(
+      in oklab,
+      var(--border) 65%,
+      var(--accent-soft)
+    ),
+    transparent
+  );
+}
+
+/* ======================================================
+   COMMENTS
+   ====================================================== */
+
+.timeline-comments {
+  margin-top: 8px;
+}
+
+.timeline-comments-collapsed {
+  padding-top: 8px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.timeline-comments-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 4px;
+
+  font-size: 0.85rem;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.timeline-comments-expanded {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  transition:
+    max-height 0.28s ease,
+    opacity 0.18s ease;
+}
+
+.timeline-comments-expanded.open {
+  max-height: 600px;
+  opacity: 1;
+}
+
+.timeline-comment {
+  padding: 8px 10px;
+  border-radius: 12px;
+
+  font-size: 0.9rem;
+  line-height: 1.4;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.comment--other {
+  background: color-mix(
+    in oklab,
+    var(--bg) 88%,
+    var(--bg-input)
+  );
+
+  border: 1px solid color-mix(
+    in oklab,
+    var(--glass-border) 85%,
+    transparent
+  );
+}
+
+.comment--author {
+  background: color-mix(
+    in oklab,
+    var(--accent) 8%,
+    var(--bg)
+  );
+
+  border: 1px solid color-mix(
+    in oklab,
+    var(--accent) 35%,
+    var(--glass-border)
+  );
+}
+
+.comment-username {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.comment--author .comment-username {
+  color: color-mix(
+    in oklab,
+    var(--accent) 70%,
+    var(--muted)
+  );
+}
+
+/* ======================================================
+   COMMENT INPUT
+   ====================================================== */
+
+.timeline-comment-input {
+  margin-top: 8px;
+}
+
+.timeline-comment-input input {
+  width: 100%;
+  padding: 10px 12px;
+
+  border-radius: 12px;
+  border: 1px solid color-mix(
+    in oklab,
+    var(--border) 70%,
+    transparent
+  );
+
+  background: color-mix(
+    in oklab,
+    white 92%,
+    var(--bg)
+  );
+
+  color: var(--text);
+  font-size: 0.9rem;
+
+  outline: none;
+
+  transition:
+    border-color 0.12s ease,
+    background 0.12s ease;
+}
+
+.timeline-comment-input input:focus {
+  border-color: var(--accent);
+  background: color-mix(
+    in oklab,
+    white 96%,
+    var(--bg)
+  );
+}
+
+.timeline-comment-input input::placeholder {
+  color: var(--muted);
+}
+
+/* ======================================================
+   MENUS (POST & COMMENT)
+   ====================================================== */
+
+.timeline-menu {
+  position: relative;
+  margin-left: 8px;
+
+  display: flex;
+  align-items: flex-start;
+}
+
+.timeline-menu > button {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.timeline-menu > button:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* ================= MATTE DROPDOWN MENU ================= */
+
+.timeline-menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 30;
+
+  min-width: 140px;
+  padding: 6px;
+
+  background: color-mix(
+    in oklab,
+    var(--bg) 96%,
+    var(--bg-input)
+  );
+
+  border: 1px solid color-mix(
+    in oklab,
+    var(--border) 80%,
+    transparent
+  );
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.12);
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ✅ BASE BUTTON STYLES (THIS WAS MISSING) */
+.timeline-menu-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: none;
+  border: none;
+
+  padding: 8px 10px;
+  border-radius: 8px;
+
+  font-size: 0.85rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.timeline-menu-dropdown button:hover {
+  background: color-mix(
+    in oklab,
+    var(--accent) 10%,
+    transparent
+  );
+}
+
+/* 🔴 DANGER ACTIONS */
+.timeline-menu-dropdown button.danger {
+  color: #ff6b6b;
+}
+
+.timeline-menu-dropdown button.danger:hover {
+  background: rgba(255, 107, 107, 0.12);
+}
+
+/* ======================================================
    MOBILE
    ====================================================== */
 
