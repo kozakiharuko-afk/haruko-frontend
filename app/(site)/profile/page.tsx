@@ -66,12 +66,13 @@ export default function ProfilePage() {
   return (
     <div className="profile-page">
       <ProfileHeader
-        username="south"
-        avatarUrl="/avatar.png"
-        roles={["VIP"]}
-        lastActive="Just now"
-        memberViews={123}
-      />
+  username="south"
+  avatarUrl="/avatar.png"
+  roles={["VIP"]}
+  lastActive="..."
+  memberViews={123}
+  isOwner={true}   // 👈 add this
+/>
 
       {/* ================= MENU ================= */}
       <div className="profile-menu">

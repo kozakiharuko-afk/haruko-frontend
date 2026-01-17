@@ -10,7 +10,7 @@ type ProfileHeaderProps = {
   roles?: string[];
   lastActive?: string | null;
   memberViews: number;
-  isOwner: boolean;
+  isOwner?: boolean;
 };
 
 const ProfileHeader: FC<ProfileHeaderProps> = ({
